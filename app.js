@@ -3,16 +3,25 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose=require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 // session,cookies
 const session=require('express-session');
-const mongoose=require('mongoose');
-// import cac model
-require('./components/controller/productModel');
 
-const ProductAPIRouter=require('./routes/api/ProductApi');
+// API
+var UserAPIRouter = require('./routes/api/UserAPI')
+var CommentAPIRouter = require('./routes/api/CommentAPI')
+var FavoriteAPIRouter = require('./routes/api/FavoriteAPI')
+var IngredientAPIRouter = require('./routes/api/IngredientAPI')
+var CategoryAPIRouter = require('./routes/api/CategoryAPI')
+var RecipeAPIRouter = require('./routes/api/RecipeAPI')
+
+
+
+
+// CPANEL
 
 var app = express();
 const port = process.env.PORT || 3001;
@@ -29,11 +38,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//http:localhost:3000/product
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-//http:localhost:3000/product
-app.use('/product',ProductAPIRouter);
+// API 
+// http://localhost:3000/product/api
+app.use('/user/api', UserAPIRouter);
+
 
 
 // khai bao thong tin cua session
