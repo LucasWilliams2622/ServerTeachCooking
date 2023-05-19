@@ -1,0 +1,14 @@
+const mongoose = require('mongoose');
+const ObjectId = Schema.ObjectId;
+
+const categorySchema = new mongoose.Schema({
+    id: {
+        type: ObjectId
+    },
+    name: {
+        type: String
+    },
+
+})
+module.exports = mongoose.models.category || mongoose.model('Catagory', categorySchema);
+
