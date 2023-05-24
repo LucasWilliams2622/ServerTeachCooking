@@ -56,10 +56,10 @@ app.use('/comment/api', CommentAPIRouter);
 // http://localhost:3000/user/api
 app.use('/favorite/api', FavoriteAPIRouter);
 
-// http://localhost:3000/user/api
+// http://localhost:3001/ingredient/api
 app.use('/ingredient/api', IngredientAPIRouter);
 
-// http://localhost:3000/user/api
+// http://localhost:3001/recipe/api
 app.use('/recipe/api', RecipeAPIRouter);
 
 
