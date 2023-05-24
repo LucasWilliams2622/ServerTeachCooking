@@ -47,10 +47,10 @@ app.use('/users', usersRouter);
 // http://localhost:3000/user/api
 app.use('/user/api', UserAPIRouter);
 
-// http://localhost:3000/user/api
+// http://localhost:3000/category/api
 app.use('/category/api', CategoryAPIRouter);
 
-// http://localhost:3000/user/api
+// http://localhost:3000/comment/api
 app.use('/comment/api', CommentAPIRouter);
 
 // http://localhost:3000/user/api
