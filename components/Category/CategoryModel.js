@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 const categorySchema = new mongoose.Schema({
@@ -10,5 +11,5 @@ const categorySchema = new mongoose.Schema({
     },
 
 })
-module.exports = mongoose.models.category || mongoose.model('Catagory', categorySchema);
+module.exports = mongoose.models.category || mongoose.model('Category', categorySchema);
 

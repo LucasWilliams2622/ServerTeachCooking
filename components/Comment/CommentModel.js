@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
-
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 const commentSchema = new mongoose.Schema({
+    id: {
+        type: ObjectId
+    },
     name: {
         type: String,
         required: true,
@@ -10,7 +14,7 @@ const commentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    avatar: {
+    image: {
         type: String,
         ref: 'User'
     }
