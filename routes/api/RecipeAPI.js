@@ -29,10 +29,10 @@ router.get('/get-by-id/:id', async (req, res, next) => {
         return res.status(500).json({ result: false, product: null });
     }
 });
-// http://localhost:3001/recipe/api/search-by-title
-router.get('/search-by-title', [], async (req, res, next) => {
+// http://localhost:3001/recipe/api/search-by-title?title=
+router.get('/search-by-name', [], async (req, res, next) => {
     try {
-        const { title } = req.body;
+        const { title } = req.query;
         const recipe = await recipeController.searchRecipeByName(title);
         return res.status(200).json({ result: true, recipe: recipe });
 

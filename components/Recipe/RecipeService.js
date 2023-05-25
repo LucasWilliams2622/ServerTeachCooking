@@ -92,9 +92,10 @@ const updateRecipetById = async (id, title, description, image, ingredients, ste
 const searchRecipeByName = async (title) => {
     try {
         return await recipeModel.find({
-            title:
+            name:
                 // ten co chua , ko phan biet hoa thuong
                 { $regex: title, $options: 'i' },
+            $or: [{ quantity: { $lt: 5 } }, { quantity: { $gt: 50 } }]
         });
     } catch (error) {
         console.log('search recipe by name error ', error);
