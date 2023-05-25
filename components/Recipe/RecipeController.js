@@ -45,7 +45,7 @@ const updateRecipetById = async (id, title, description, image, ingredients, ste
 
 const searchRecipeByName = async (title) => {
     try {
-        return await productService.searchProductByName(title);
+        return await recipeService.searchRecipeByName(title);
     } catch (error) {
         console.log('Search recipe by name error: ', error);
 

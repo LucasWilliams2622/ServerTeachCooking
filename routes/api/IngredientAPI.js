@@ -28,17 +28,19 @@ router.get('/get-by-id/:id', async (req, res, next) => {
         return res.status(500).json({ result: false, product: null });
     }
 });
-// http://localhost:3001/ingredient/api/search-by-name?name=
+// http://localhost:3001/ingredient/api/search-by-name
 router.get('/search-by-name', [], async (req, res, next) => {
     try {
-        const { name } = req.query;
-        const ingredient = await ingredientController.searchRecipeByName(name);
+        const { name } = req.body;
+        const ingredient = await ingredientController.searchIngredientByName(name);
         return res.status(200).json({ result: true, ingredient: ingredient });
 
     } catch (error) {
-        return res.status(500).json({ result: false, recipe: null });
+        return res.status(500).json({ result: false, ingredient: null });
     }
 });
+
+
 // http://localhost:3001/ingredient/api/delete-by-id/:id
 router.delete('/delete-by-id/:id', async (req, res, next) => {
     try {
@@ -72,7 +74,7 @@ router.post('/update-by-id/:id', async (req, res, next) => {
 router.post('/new', async (req, res, next) => {
     try {
 
-        const { name, quantity, unit} = req.body;
+        const { name, quantity, unit } = req.body;
         await ingredientController.addNewIngredient(name, quantity, unit);
         return res.status(200).json({ result: true, ingredient: null });
 

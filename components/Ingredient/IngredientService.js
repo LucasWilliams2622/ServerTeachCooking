@@ -65,12 +65,10 @@ const searchIngredientByName = async (name) => {
         return await ingredientModel.find({
             name:
                 // ten co chua , ko phan biet hoa thuong
-                { $regex: name, $options: 'i' },
-            $or: [{ quantity: { $lt: 5 } }, { quantity: { $gt: 50 } }]
+                { $regex: name, $options: 'i' }
         });
     } catch (error) {
         console.log('search Ingredient by name error ', error);
-
     }
     return null;
 }
