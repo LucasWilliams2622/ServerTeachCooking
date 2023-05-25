@@ -26,7 +26,7 @@ const addNewIngredient = async (name, quantity, unit) => {
         await p.save();
         return true;
     } catch (error) {
-        console.log('Add new Ingredient error: ', error);
+        // console.log('Add new Ingredient error: ', error);
         return false;
     }
 }

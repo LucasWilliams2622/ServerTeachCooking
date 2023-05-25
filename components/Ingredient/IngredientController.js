@@ -5,7 +5,7 @@ const getAllIngredient = async (page, size) => {
         return await ingredientService.getAllIngredient(page, size);
 
     } catch (error) {
-        throw error;
+        return false;
     }
 }
 
