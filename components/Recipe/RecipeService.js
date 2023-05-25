@@ -28,12 +28,7 @@ const getAllRecipe_vs2 = async (page, size) => {
 
 const deleteRecipeById = async (id) => {
     try {
-        // const index = data.findIndex(item => item._id.toString() == id.toString());
-        // if (index >= 0) {
-        //     data.splice(index, 1);
-        // }
-        // return true;
-
+   
         await recipeModel.findByIdAndDelete(id);
         return true;
     } catch (error) {
@@ -64,7 +59,7 @@ const getRecipeById = async (id) => {
 }
 
 
-const updateRecipetById = async (id, title, description, image, ingredients, steps, time, difficulty, mealType, author) => {
+const updateRecipeById = async (id, title, description, image, ingredients, steps, time, difficulty, mealType, author) => {
     try {
 
         const recipe = await recipeModel.findById(id);
@@ -91,12 +86,16 @@ const updateRecipetById = async (id, title, description, image, ingredients, ste
 // tim kien san pham theo ten
 const searchRecipeByName = async (title) => {
     try {
-        return await recipeModel.find({
-            name:
-                // ten co chua , ko phan biet hoa thuong
-                { $regex: title, $options: 'i' },
-            $or: [{ quantity: { $lt: 5 } }, { quantity: { $gt: 50 } }]
-        });
+        // return await recipeModel.findOne({
+        //     name:
+        //         // ten co chua , ko phan biet hoa thuong
+        //         { $regex: title, $options: 'i' },
+        //     $or: [{ quantity: { $lt: 5 } }, { quantity: { $gt: 50 } }]
+        // });
+
+        return await recipeModel.findOne(
+            { title: title }
+        )
     } catch (error) {
         console.log('search recipe by name error ', error);
 
@@ -105,5 +104,5 @@ const searchRecipeByName = async (title) => {
 }
 
 
-module.exports = { getAllRecipe, deleteRecipeById, addNewRecipe, getRecipeById, updateRecipetById, searchRecipeByName, };
+module.exports = { getAllRecipe, deleteRecipeById, addNewRecipe, getRecipeById, updateRecipeById, searchRecipeByName, };
 

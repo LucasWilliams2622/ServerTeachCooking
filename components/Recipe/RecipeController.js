@@ -35,9 +35,9 @@ const getRecipeById = async (id) => {
 }
 
 
-const updateRecipetById = async (id, title, description, image, ingredients, steps, time, difficulty, mealType, author) => {
+const updateRecipeById = async (id, title, description, image, ingredients, steps, time, difficulty, mealType, author) => {
     try {
-        return await recipeService.updateRecipetById(id, title, description, image, ingredients, steps, time, difficulty, mealType, author);
+        return await recipeService.updateRecipeById(id, title, description, image, ingredients, steps, time, difficulty, mealType, author);
     } catch (error) {
         return false;
     }
@@ -45,11 +45,11 @@ const updateRecipetById = async (id, title, description, image, ingredients, ste
 
 const searchRecipeByName = async (title) => {
     try {
-        return await productService.searchProductByName(title);
+        return await recipeService.searchRecipeByName(title);
     } catch (error) {
         console.log('Search recipe by name error: ', error);
 
     }
     return null;
 }
-module.exports = { getAllRecipe, deleteRecipeById, addNewRecipe, getRecipeById, updateRecipetById, searchRecipeByName };
+module.exports = { getAllRecipe, deleteRecipeById, addNewRecipe, getRecipeById, updateRecipeById, searchRecipeByName };
