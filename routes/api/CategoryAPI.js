@@ -18,7 +18,7 @@ router.get('/get-all' ,async(req,res,next)=>{
     }
 });
 //http://localhost:3000/category/api/delete-by-id?id=
-router.get('/delete-by-id',async(req,res,next)=>{
+router.delete('/delete-by-id',async(req,res,next)=>{
     try {
         const {id}=req.query;
         const category=await categoryController.deleteCategoryById(id);
@@ -53,7 +53,7 @@ router.post('/add-new',[],async(req,res,next)=>{
     }
 });
 //http://localhost:3000/category/api/update-by-id?id=
-router.post('/update-by-id',[],async(req,res,next)=>{
+router.put('/update-by-id',[],async(req,res,next)=>{
 
     try {
         const {id}=req.query;

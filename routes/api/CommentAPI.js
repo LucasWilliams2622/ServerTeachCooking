@@ -36,7 +36,7 @@ router.get('/delete-by-id',async(req,res,next)=>{
     }
 });
 //http://localhost:3000/comment/api/delete-by-id?name=
-router.get('/delete-by-id',async(req,res,next)=>{
+router.delete('/delete-by-id',async(req,res,next)=>{
     try {
         const {name}=req.query;
         const comment=await commentController.deleteCommentByName(name);
@@ -60,7 +60,7 @@ router.get('/get-all' ,async(req,res,next)=>{
     }
 });
 //http://localhost:3000/comment/api/update-by-id?id=
-router.post('/update-by-id',[upLoadImage.single('image')],async(req,res,next)=>{
+router.put('/update-by-id',[upLoadImage.single('image')],async(req,res,next)=>{
 
     try {
         const {id}=req.query;
