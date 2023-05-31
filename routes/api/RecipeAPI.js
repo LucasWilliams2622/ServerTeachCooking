@@ -29,10 +29,10 @@ router.get('/get-by-id/', async (req, res, next) => {
         return res.status(500).json({ result: false, product: null });
     }
 });
-// http://localhost:3001/recipe/api/search-by-title?title=
-router.get('/search-by-name', [], async (req, res, next) => {
+// http://localhost:3001/recipe/api/search-by-title
+router.get('/search-by-title', [], async (req, res, next) => {
     try {
-        const { title } = req.query;
+        const { title } = req.body;
         console.log(title)
         const recipe = await recipeController.searchRecipeByName(title);
         if (recipe) {
@@ -98,7 +98,7 @@ router.post('/new', [upLoadImage.single('image')], async (req, res, next) => {
     }
 });
 
-//     http://localhost:3000/recipe/api/upload-avatar
+//     http://localhost:3000/recipe/api/upload-image
 router.post('/upload-image', [upLoadImage.single('image')], async (req, res, next) => {
     try {
         const { file } = req;
