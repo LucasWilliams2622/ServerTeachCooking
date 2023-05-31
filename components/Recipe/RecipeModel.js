@@ -48,6 +48,9 @@ const recipeSchema = new mongoose.Schema({
   updatedAt: {
     type: Date,
     default: Date.now
+  },
+  idVideo: {
+    type: String,
   }
 });
 
