@@ -18,7 +18,7 @@ router.get('/get-all', [], async (req, res, next) => {
 router.get('/get-by-id/', async (req, res, next) => {
     try {
         const { id } = req.query;
-        const recipe = await recipeController.getRecipeById(id);
+        const recipe = await recipeController.getById(id);
         if (recipe) {
             return res.status(200).json({ result: true, recipe: recipe, error: false });
 
@@ -34,7 +34,21 @@ router.get('/search-by-title', [], async (req, res, next) => {
     try {
         const { title } = req.body;
         console.log(title)
-        const recipe = await recipeController.searchRecipeByName(title);
+        const recipe = await recipeController.searchByTitle(title);
+        if (recipe) {
+            return res.status(200).json({ result: true, recipe: recipe });
+        }
+        return res.status(400).json({ result: false });
+    } catch (error) {
+        return res.status(500).json({ result: false, recipe: null });
+    }
+});
+// http://localhost:3001/recipe/api/search-by-author
+router.get('/search-by-author', [], async (req, res, next) => {
+    try {
+        const { author } = req.body;
+        console.log(author)
+        const recipe = await recipeController.searchByAuthor(author);
         if (recipe) {
             return res.status(200).json({ result: true, recipe: recipe });
         }
@@ -47,7 +61,7 @@ router.get('/search-by-title', [], async (req, res, next) => {
 router.delete('/delete-by-id', async (req, res, next) => {
     try {
         const { id } = req.query;
-        const recipe = await recipeController.deleteRecipeById(id);
+        const recipe = await recipeController.deleteById(id);
         if (recipe) {
             return res.status(200).json({ result: true, message: "Delete Success" });
 
@@ -70,7 +84,7 @@ router.put('/update-by-id/', [upLoadImage.single('image')], async (req, res, nex
         }
         const { id } = req.query;
         const { title, description, image, ingredients, steps, time, difficulty, mealType, author } = body;
-        const recipe = await recipeController.updateRecipetById(id, title, description, image, ingredients, steps, time, difficulty, mealType, author);
+        const recipe = await recipeController.updateByid(id, title, description, image, ingredients, steps, time, difficulty, mealType, author);
         if (recipe) {
             return res.status(200).json({ result: true, recipe: recipe });
         }
