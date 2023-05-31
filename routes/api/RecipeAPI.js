@@ -49,10 +49,10 @@ router.delete('/delete-by-id', async (req, res, next) => {
         const { id } = req.query;
         const recipe = await recipeController.deleteRecipeById(id);
         if (recipe) {
-            return res.status(200).json({ result: true ,message:"Delete Success"});
+            return res.status(200).json({ result: true, message: "Delete Success" });
 
         }
-        return res.status(400).json({ result: false ,message:"Delete Failed"});
+        return res.status(400).json({ result: false, message: "Delete Failed" });
 
     } catch (error) {
         return res.status(500).json({ result: false, products: null });
@@ -98,7 +98,20 @@ router.post('/new', [upLoadImage.single('image')], async (req, res, next) => {
     }
 });
 
-
+//     http://localhost:3000/recipe/api/upload-avatar
+router.post('/upload-image', [upLoadImage.single('image')], async (req, res, next) => {
+    try {
+        const { file } = req;
+        if (file) {
+            const link = `http://10.0.2.2:3000/images/${file.filename}`;
+            return res.status(200).json({ result: true, link: link })
+        }
+        return res.status(400).json({ result: false, link: null })
+    } catch (error) {
+        console.log("Failed to updaload error:" + error);
+        return res.status(500).json({ result: false, massage: "Failed to updaload avatar" })
+    }
+})
 
 
 
