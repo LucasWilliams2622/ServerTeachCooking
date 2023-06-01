@@ -11,21 +11,21 @@ const addNewCommnet=async (name,content,image)=>{
     try {
         return await CommentService.getAllCommnent(page,size);
     } catch (error) {
-        throw error;
+        return false;
     }
 }
 const deleteCommentById = async (id) =>{
     try {
         return await CommentService.deleteCommentById(id);
     } catch (error) {
-        throw error;
+        return false;
     }
 }
 const deleteCommentByName = async (name) =>{
     try {
         return await CommentService.deleteCommentByName(name);
     } catch (error) {
-        throw error;
+        return false;
     }
 }
 const updateCommentById=async(id,name, content,image)=>{

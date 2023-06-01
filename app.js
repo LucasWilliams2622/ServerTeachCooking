@@ -44,7 +44,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // API 
-// http://localhost:3000/user/api
+// http://localhost:3001/user/api
 app.use('/user/api', UserAPIRouter);
 
 // http://localhost:3000/category/api
@@ -53,13 +53,13 @@ app.use('/category/api', CategoryAPIRouter);
 // http://localhost:3000/comment/api
 app.use('/comment/api', CommentAPIRouter);
 
-// http://localhost:3000/user/api
+// http://localhost:3001/user/api
 app.use('/favorite/api', FavoriteAPIRouter);
 
-// http://localhost:3000/user/api
+// http://localhost:3001/ingredient/api
 app.use('/ingredient/api', IngredientAPIRouter);
 
-// http://localhost:3000/user/api
+// http://localhost:3001/recipe/api
 app.use('/recipe/api', RecipeAPIRouter);
 
 

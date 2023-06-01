@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 
 const recipeSchema = new mongoose.Schema({
+  id: { type: ObjectId },
   title: {
     type: String,
     required: true
@@ -11,7 +14,7 @@ const recipeSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: true
+    required: false
   },
   ingredients: {
     type: [String],
@@ -27,11 +30,11 @@ const recipeSchema = new mongoose.Schema({
   },
   difficulty: {
     type: String,
-   
+
   },
   mealType: {
     type: String,
-   
+
   },
   author: {
     type: String,
@@ -45,6 +48,9 @@ const recipeSchema = new mongoose.Schema({
   updatedAt: {
     type: Date,
     default: Date.now
+  },
+  idVideo: {
+    type: String,
   }
 });
 
