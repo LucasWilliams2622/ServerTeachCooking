@@ -1,10 +1,10 @@
 const recipeService = require('./RecipeService');
 
-const getAllRecipe = async (page, size) => {
+const getAllRecipe = async () => {
     try {
-        return await recipeService.getAllRecipe(page, size);
+        return await recipeService.getAllRecipe();
     } catch (error) {
-        throw error;
+        return false;
     }
 }
 
@@ -16,9 +16,13 @@ const deleteById = async (id) => {
     }
 }
 
-const addNewRecipe = async (title, description, image, ingredients, steps, time, difficulty, mealType, author) => {
+const addNewRecipe = async (title, description, image, ingredients, steps, category, idComment, author, idVideo, time, difficulty, mealType,createdAt,updatedAt) => {
     try {
-        return await recipeService.addNewRecipe(title, description, image, ingredients, steps, time, difficulty, mealType, author);
+        return await recipeService.addNewRecipe(
+            title, description, image, ingredients, 
+            steps, category, idComment, author, 
+            idVideo, time, difficulty, mealType,
+            createdAt,updatedAt);
     } catch (error) {
         return false;
     }
@@ -32,9 +36,9 @@ const getById = async (id) => {
     }
 }
 
-const updateById = async (id, title, description, image, ingredients, steps, time, difficulty, mealType, author) => {
+const updateById = async (id, title, description, image, ingredients, steps, category, idComment, author, idVideo, time, difficulty, mealType,createdAt,updatedAt) => {
     try {
-        return await recipeService.updateById(id, title, description, image, ingredients, steps, time, difficulty, mealType, author);
+        return await recipeService.updateById(id, title, description, image, ingredients, steps, category, idComment, author, idVideo, time, difficulty, mealType,createdAt,updatedAt);
     } catch (error) {
         return false;
     }

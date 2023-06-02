@@ -7,6 +7,7 @@ const upLoadImage = require("../../MiddleWare/UpLoadImage")
 router.get('/get-all', [], async (req, res, next) => {
     try {
         const recipe = await recipeController.getAllRecipe();
+        console.log(recipe)
         return res.status(200).json({ result: true, recipe: recipe, error: false });
 
     } catch (error) {
@@ -57,7 +58,7 @@ router.get('/search-by-author', [], async (req, res, next) => {
         return res.status(500).json({ result: false, recipe: null });
     }
 });
-// http://localhost:3001/recipe/api/delete-by-id/
+// http://localhost:3001/recipe/api/delete-by-id
 router.delete('/delete-by-id', async (req, res, next) => {
     try {
         const { id } = req.query;
@@ -103,10 +104,11 @@ router.post('/new', [upLoadImage.single('image')], async (req, res, next) => {
             file = `http://192.168.2.8:3000/images/${file.filename}`;
             body = { ...body, image: file };
         }
-        const { title, description, image, ingredients, steps, time, difficulty, mealType, author } = body;
-        await recipeController.addNewRecipe(title, description, image,
-            ingredients, steps, time, difficulty, mealType, author);
-        return res.status(200).json({ result: true, recipe: null });
+        const { title, description, image, ingredients, steps, category, idComment, author, idVideo, time, difficulty, mealType, createdAt, updatedAt } = body;
+        const recipe = await recipeController.addNewRecipe(title, description, image, ingredients,
+            steps, category, idComment, author, idVideo,
+            time, difficulty, mealType, createdAt, updatedAt);
+        return res.status(200).json({ message: "Add new success", result: true, recipe: recipe });
     } catch (error) {
         return res.status(500).json({ result: false, recipe: null });
     }

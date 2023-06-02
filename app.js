@@ -17,6 +17,8 @@ var FavoriteAPIRouter = require('./routes/api/FavoriteAPI')
 var IngredientAPIRouter = require('./routes/api/IngredientAPI')
 var CategoryAPIRouter = require('./routes/api/CategoryAPI')
 var RecipeAPIRouter = require('./routes/api/RecipeAPI')
+var StepAPIRouter = require('./routes/api/StepAPI')
+
 
 
 
@@ -62,6 +64,8 @@ app.use('/ingredient/api', IngredientAPIRouter);
 // http://localhost:3001/recipe/api
 app.use('/recipe/api', RecipeAPIRouter);
 
+// http://localhost:3001/step/api
+app.use('/step/api', StepAPIRouter);
 
 
 

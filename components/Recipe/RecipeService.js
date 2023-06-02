@@ -2,7 +2,17 @@ const recipeModel = require('./RecipeModel');
 
 const getAllRecipe = async (page, size) => {
     try {
-        return await recipeModel.find();
+        return recipeModel.find({}, 'title description image ingredients steps idComment author idVideo ')
+            .populate('author', 'name avatar')
+            .populate('steps', 'content numStep')
+            .populate('ingredients', 'unit quantity name')
+            // .populate('idComment', 'unit content name')
+            // .populate('Category', 'name')
+
+
+
+            
+
     } catch (error) {
         console.log('Get all recipe error:', error);
         throw error;
@@ -35,9 +45,13 @@ const deleteById = async (id) => {
     }
 }
 
-const addNewRecipe = async (title, description, image, ingredients, steps, time, difficulty, mealType, author) => {
+const addNewRecipe = async (title, description, image, ingredients, steps, category, idComment, author, idVideo, time, difficulty, mealType, createdAt, updatedAt) => {
     try {
-        const newRecipe = { title, description, image, ingredients, steps, time, difficulty, mealType, author };
+        const newRecipe = {
+            title, description, image, ingredients,
+            steps, category, idComment, author, idVideo,
+            time, difficulty, mealType, createdAt, updatedAt
+        };
         const p = new recipeModel(newRecipe);
         await p.save();
         return true;
@@ -49,7 +63,7 @@ const addNewRecipe = async (title, description, image, ingredients, steps, time,
 
 const getById = async (id) => {
     try {
-        return await recipeModel.findById(id);
+        return recipeModel.findById(id);
     } catch (error) {
         console.log("Get product by id error " + error);
         return null;
@@ -57,19 +71,28 @@ const getById = async (id) => {
 }
 
 
-const updateById = async (id, title, description, image, ingredients, steps, time, difficulty, mealType, author) => {
+const updateById = async (id, title, description, image, ingredients, steps, category, idComment, author, idVideo, time, difficulty, mealType, createdAt, updatedAt) => {
     try {
         const recipe = await recipeModel.findById(id);
         if (recipe) {
             recipe.title = title ? title : recipe.title;
             recipe.description = description ? description : recipe.description;
             recipe.image = image ? image : recipe.image;
+
             recipe.ingredients = ingredients ? ingredients : recipe.ingredients;
             recipe.steps = steps ? steps : recipe.steps;
+            recipe.category = category ? category : recipe.category;
+            recipe.idComment = idComment ? idComment : recipe.idComment;
+
+            recipe.idVideo = idVideo ? idVideo : recipe.idVideo;
             recipe.time = time ? time : recipe.time;
             recipe.difficulty = difficulty ? difficulty : recipe.difficulty;
             recipe.mealType = mealType ? mealType : recipe.mealType;
+
             recipe.author = author ? author : recipe.author;
+            recipe.createdAt = createdAt ? createdAt : recipe.createdAt;
+            recipe.updatedAt = updatedAt ? updatedAt : recipe.updatedAt;
+
             await recipe.save();
             return true;
         }
@@ -82,13 +105,6 @@ const updateById = async (id, title, description, image, ingredients, steps, tim
 
 const searchByTitle = async (title) => {
     try {
-        // return await recipeModel.findOne({
-        //     name:
-        //         // ten co chua , ko phan biet hoa thuong
-        //         { $regex: title, $options: 'i' },
-        //     $or: [{ quantity: { $lt: 5 } }, { quantity: { $gt: 50 } }]
-        // });
-
         const recipe = await recipeModel.find({ title })
         console.log(recipe);
         return recipe
