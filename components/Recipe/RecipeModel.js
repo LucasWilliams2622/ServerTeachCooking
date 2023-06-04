@@ -4,51 +4,25 @@ const ObjectId = Schema.ObjectId;
 
 const recipeSchema = new mongoose.Schema({
   id: { type: ObjectId },
-  title: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  image: {
-    type: String,
-    required: false
-  },
-  ingredients: {
-    type: [String],
-    required: true
-  },
-  steps: {
-    type: [String],
-    required: true
-  },
-  time: {
-    type: String,
-    required: true
-  },
-  difficulty: {
-    type: String,
+  title: { type: String, required: true },
+  description: { type: String, required: false },
+  image: { type: String, required: true, },
 
-  },
-  mealType: {
-    type: String,
+  ingredients: { type: [String], ref: 'Ingredient', required: true },
+  steps: { type: [String], ref: 'Step', required: true },
+  category: { type: [String], ref: 'Category' },
+  idComment: { type: [String], ref: 'Comment', },
+  author: { type: ObjectId, required: true, ref: 'User', },
 
-  },
-  author: {
-    type: ObjectId,
-    required: true,
-    ref: 'User'
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
-  }
+  idVideo: { type: String, },
+  difficulty: { type: String, },
+  mealType: { type: String, },
+  time: { type: Number, default: 1 },
+  createdAt: { type: Date, default: Date.now, },
+  updatedAt: { type: Date, default: Date.now, },
+
+
+ 
 });
 
 

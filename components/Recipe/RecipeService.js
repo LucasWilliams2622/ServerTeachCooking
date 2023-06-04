@@ -2,7 +2,12 @@ const recipeModel = require('./RecipeModel');
 
 const getAllRecipe = async (page, size) => {
     try {
-        return await recipeModel.find().populate('author','name');
+        return await recipeModel.find({}, 'title description image ingredients steps idComment author idVideo ')
+        .populate('author', 'name avatar')
+        .populate('steps', 'content numStep')
+        .populate('ingredients', 'unit quantity name')
+        // .populate('idComment', 'unit content name')
+        // .populate('Category', 'name')
     } catch (error) {
         console.log('Get all recipe error:', error);
         throw error;
@@ -19,16 +24,14 @@ const getAllRecipe_vs2 = async (page, size) => {
             .sort({ name: -1 }) // sap xep theo ten 1 : tang dan , -1 :giam dan
             .skip(2) // bo qua bao nhieu san pham
             .limit(3); // gioi han so san pham
-
     } catch (error) {
         console.log('Get all recipe error:', error);
         throw error;
     }
 }
 
-const deleteRecipeById = async (id) => {
+const deleteById = async (id) => {
     try {
-   
         await recipeModel.findByIdAndDelete(id);
         return true;
     } catch (error) {
@@ -37,9 +40,13 @@ const deleteRecipeById = async (id) => {
     }
 }
 
-const addNewRecipe = async (title, description, image, ingredients, steps, time, difficulty, mealType, author) => {
+const addNewRecipe = async (title, description, image, ingredients, steps, category, idComment, author, idVideo, time, difficulty, mealType, createdAt, updatedAt) => {
     try {
-        const newRecipe = { title, description, image, ingredients, steps, time, difficulty, mealType, author };
+        const newRecipe = {
+            title, description, image, ingredients,
+            steps, category, idComment, author, idVideo,
+            time, difficulty, mealType, createdAt, updatedAt
+        };
         const p = new recipeModel(newRecipe);
         await p.save();
         return true;
@@ -49,9 +56,9 @@ const addNewRecipe = async (title, description, image, ingredients, steps, time,
     }
 }
 
-const getRecipeById = async (id) => {
+const getById = async (id) => {
     try {
-        return await recipeModel.findById(id);
+        return recipeModel.findById(id);
     } catch (error) {
         console.log("Get product by id error " + error);
         return null;
@@ -59,50 +66,64 @@ const getRecipeById = async (id) => {
 }
 
 
-const updateRecipeById = async (id, title, description, image, ingredients, steps, time, difficulty, mealType, author) => {
+const updateById = async (id, title, description, image, ingredients, steps, category, idComment, author, idVideo, time, difficulty, mealType, createdAt, updatedAt) => {
     try {
-
         const recipe = await recipeModel.findById(id);
         if (recipe) {
             recipe.title = title ? title : recipe.title;
             recipe.description = description ? description : recipe.description;
             recipe.image = image ? image : recipe.image;
+
             recipe.ingredients = ingredients ? ingredients : recipe.ingredients;
             recipe.steps = steps ? steps : recipe.steps;
+            recipe.category = category ? category : recipe.category;
+            recipe.idComment = idComment ? idComment : recipe.idComment;
+
+            recipe.idVideo = idVideo ? idVideo : recipe.idVideo;
             recipe.time = time ? time : recipe.time;
             recipe.difficulty = difficulty ? difficulty : recipe.difficulty;
             recipe.mealType = mealType ? mealType : recipe.mealType;
+
             recipe.author = author ? author : recipe.author;
+            recipe.createdAt = createdAt ? createdAt : recipe.createdAt;
+            recipe.updatedAt = updatedAt ? updatedAt : recipe.updatedAt;
+
             await recipe.save();
             return true;
         }
-
     } catch (error) {
         console.log("Update recipe by Id error " + error);
         return false;
     }
 }
 
-// tim kien san pham theo ten
-const searchRecipeByName = async (title) => {
-    try {
-        // return await recipeModel.findOne({
-        //     name:
-        //         // ten co chua , ko phan biet hoa thuong
-        //         { $regex: title, $options: 'i' },
-        //     $or: [{ quantity: { $lt: 5 } }, { quantity: { $gt: 50 } }]
-        // });
 
-        return await recipeModel.findOne(
-            { title: title }
-        )
+const searchByTitle = async (title) => {
+    try {
+        const recipe = await recipeModel.find({ title })
+        console.log(recipe);
+        return recipe
+
     } catch (error) {
         console.log('search recipe by name error ', error);
+    }
+    return null;
+}
+const searchByAuthor = async (author) => {
+    try {
+        const recipe = await recipeModel.find({ author })
+        console.log(recipe);
+        return recipe
 
+    } catch (error) {
+        console.log('search recipe by name error ', error);
     }
     return null;
 }
 
-
-module.exports = { getAllRecipe, deleteRecipeById, addNewRecipe, getRecipeById, updateRecipeById, searchRecipeByName, };
+module.exports = {
+    getAllRecipe, deleteById, addNewRecipe,
+    getById, updateById, searchByTitle,
+    searchByAuthor
+};
 

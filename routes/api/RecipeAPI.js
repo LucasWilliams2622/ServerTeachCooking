@@ -7,6 +7,7 @@ const upLoadImage = require("../../MiddleWare/UpLoadImage")
 router.get('/get-all', [], async (req, res, next) => {
     try {
         const recipe = await recipeController.getAllRecipe();
+        console.log(recipe)
         return res.status(200).json({ result: true, recipe: recipe, error: false });
 
     } catch (error) {
@@ -18,7 +19,7 @@ router.get('/get-all', [], async (req, res, next) => {
 router.get('/get-by-id/', async (req, res, next) => {
     try {
         const { id } = req.query;
-        const recipe = await recipeController.getRecipeById(id);
+        const recipe = await recipeController.getById(id);
         if (recipe) {
             return res.status(200).json({ result: true, recipe: recipe, error: false });
 
@@ -34,7 +35,7 @@ router.post('/search-by-title', [], async (req, res, next) => {
     try {
         const { title } = req.body;
         console.log(title)
-        const recipe = await recipeController.searchRecipeByName(title);
+        const recipe = await recipeController.searchByTitle(title);
         if (recipe) {
             return res.status(200).json({ result: true, recipe: recipe });
         }
@@ -43,11 +44,25 @@ router.post('/search-by-title', [], async (req, res, next) => {
         return res.status(500).json({ result: false, recipe: null });
     }
 });
-// http://localhost:3001/recipe/api/delete-by-id/
+// http://localhost:3001/recipe/api/search-by-author
+router.get('/search-by-author', [], async (req, res, next) => {
+    try {
+        const { author } = req.body;
+        console.log(author)
+        const recipe = await recipeController.searchByAuthor(author);
+        if (recipe) {
+            return res.status(200).json({ result: true, recipe: recipe });
+        }
+        return res.status(400).json({ result: false });
+    } catch (error) {
+        return res.status(500).json({ result: false, recipe: null });
+    }
+});
+// http://localhost:3001/recipe/api/delete-by-id
 router.delete('/delete-by-id', async (req, res, next) => {
     try {
         const { id } = req.query;
-        const recipe = await recipeController.deleteRecipeById(id);
+        const recipe = await recipeController.deleteById(id);
         if (recipe) {
             return res.status(200).json({ result: true, message: "Delete Success" });
 
@@ -70,7 +85,7 @@ router.put('/update-by-id/', [upLoadImage.single('image')], async (req, res, nex
         }
         const { id } = req.query;
         const { title, description, image, ingredients, steps, time, difficulty, mealType, author } = body;
-        const recipe = await recipeController.updateRecipetById(id, title, description, image, ingredients, steps, time, difficulty, mealType, author);
+        const recipe = await recipeController.updateByid(id, title, description, image, ingredients, steps, time, difficulty, mealType, author);
         if (recipe) {
             return res.status(200).json({ result: true, recipe: recipe });
         }
@@ -89,10 +104,11 @@ router.post('/new', [upLoadImage.single('image')], async (req, res, next) => {
             file = `http://192.168.2.8:3000/images/${file.filename}`;
             body = { ...body, image: file };
         }
-        const { title, description, image, ingredients, steps, time, difficulty, mealType, author } = body;
-        await recipeController.addNewRecipe(title, description, image,
-            ingredients, steps, time, difficulty, mealType, author);
-        return res.status(200).json({ result: true, recipe: null });
+        const { title, description, image, ingredients, steps, category, idComment, author, idVideo, time, difficulty, mealType, createdAt, updatedAt } = body;
+        const recipe = await recipeController.addNewRecipe(title, description, image, ingredients,
+            steps, category, idComment, author, idVideo,
+            time, difficulty, mealType, createdAt, updatedAt);
+        return res.status(200).json({ message: "Add new success", result: true, recipe: recipe });
     } catch (error) {
         return res.status(500).json({ result: false, recipe: null });
     }

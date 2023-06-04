@@ -57,6 +57,7 @@ router.post('/add-new', [], async (req, res, next) => {
 });
 //http://localhost:3000/category/api/update-by-id?id=
 router.put('/update-by-id', [], async (req, res, next) => {
+
     try {
         const { id } = req.query;
         const { name } = req.body;
