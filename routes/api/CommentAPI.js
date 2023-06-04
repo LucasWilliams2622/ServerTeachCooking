@@ -66,6 +66,7 @@ router.get('/get-all', async (req, res, next) => {
 });
 //http://localhost:3000/comment/api/update-by-id?id=
 router.put('/update-by-id', [upLoadImage.single('image')], async (req, res, next) => {
+
     try {
         const { id } = req.query;
         let { file, body } = req;
