@@ -2,7 +2,7 @@ const recipeModel = require('./RecipeModel');
 
 const getAllRecipe = async (page, size) => {
     try {
-        return await recipeModel.find();
+        return await recipeModel.find().populate('author','name');
     } catch (error) {
         console.log('Get all recipe error:', error);
         throw error;

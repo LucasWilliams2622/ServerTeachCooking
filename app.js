@@ -18,7 +18,7 @@ var IngredientAPIRouter = require('./routes/api/IngredientAPI')
 var CategoryAPIRouter = require('./routes/api/CategoryAPI')
 var RecipeAPIRouter = require('./routes/api/RecipeAPI')
 
-
+require('./components/User/UserModel');
 
 
 // CPANEL
