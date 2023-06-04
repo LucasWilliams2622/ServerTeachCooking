@@ -37,7 +37,7 @@ const recipeSchema = new mongoose.Schema({
 
   },
   author: {
-    type: String,
+    type: ObjectId,
     required: true,
     ref: 'User'
   },
