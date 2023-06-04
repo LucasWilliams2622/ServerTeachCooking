@@ -10,9 +10,9 @@ const recipeSchema = new mongoose.Schema({
 
   ingredients: { type: [String], ref: 'Ingredient', required: true },
   steps: { type: [String], ref: 'Step', required: true },
-  category: { type: [String], ref: 'Category' },
-  idComment: { type: [String], ref: 'Comment', },
-  author: { type: [String], required: true, ref: 'User', },
+  category: { type: ObjectId, ref: 'Category' },
+  idComment: { type: ObjectId, ref: 'Comment', },
+  author: { type: ObjectId, required: true, ref: 'User', },
 
   idVideo: { type: String, },
   difficulty: { type: String, },

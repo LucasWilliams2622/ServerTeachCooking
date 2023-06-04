@@ -119,7 +119,6 @@ const searchByAuthor = async (author) => {
         const recipe = await recipeModel.find({ author })
         console.log(recipe);
         return recipe
-
     } catch (error) {
         console.log('search recipe by name error ', error);
     }

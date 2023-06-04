@@ -5,8 +5,8 @@ const getAllFavorite = async (page, size) => {
         return await FavoriteModel.find({}, 'idUser idRecipe')
             .populate("idUser", "email name")
             .populate('idRecipe', "title description image steps ingredients author")
-            .populate("idRecipe.steps","content numStep")
-            .populate("idRecipe.ingredients","name quantity unit")
+            .populate("idRecipe.steps", "content numStep")
+            .populate("idRecipe.ingredients", "name quantity unit")
 
 
             ;
@@ -18,11 +18,7 @@ const getAllFavorite = async (page, size) => {
 
 const deleteFavoriteById = async (id) => {
     try {
-        const recipe = await FavoriteModel.findOne({ id: id });
-        console.log(recipe);
-        {
-             FavoriteModel.deleteOne(recipe)
-        }
+        await FavoriteModel.findOneAndDelete({ id: id });
         return true;
     } catch (error) {
         console.log('Deleta Favorite by id error: ', error);
@@ -32,7 +28,7 @@ const deleteFavoriteById = async (id) => {
 
 const addNewFavorite = async (idUser, idRecipe) => {
     try {
-       
+
 
         const recipe = await FavoriteModel.findOne({ idRecipe: idRecipe });
         console.log("=======>", recipe);

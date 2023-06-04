@@ -44,10 +44,10 @@ router.get('/search-by-name', [], async (req, res, next) => {
     }
 });
 // http://localhost:3001/favorite/api/delete-by-idRecipe/
-router.delete('/delete-by-idRecipe', async (req, res, next) => {
+router.delete('/delete-by-id', async (req, res, next) => {
     try {
-        const { idRecipe } = req.query;
-        const favorite = await favoriteController.deleteFavoriteById(idRecipe);
+        const { id } = req.query;
+        const favorite = await favoriteController.deleteFavoriteById(id);
         if (favorite) {
             return res.status(200).json({ result: true, favorite: favorite, message: "delete success" });
         }
