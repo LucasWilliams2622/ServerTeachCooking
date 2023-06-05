@@ -114,7 +114,7 @@ router.post('/new', [upLoadImage.single('image')], async (req, res, next) => {
     }
 });
 
-//     http://localhost:3000/recipe/api/upload-image
+//http://localhost:3000/recipe/api/upload-image
 router.post('/upload-image', [upLoadImage.single('image')], async (req, res, next) => {
     try {
         const { file } = req;
