@@ -4,14 +4,14 @@ const getAllRecipe = async (page, size) => {
     try {
         return recipeModel.find({}, 'title description image ingredients steps idComment author idVideo ')
             .populate('author', 'name avatar')
-            // .populate('steps', 'content numStep')
-            // .populate('ingredients', 'unit quantity name')
-            // .populate('idComment', 'unit content name')
-            // .populate('Category', 'name')
+        // .populate('steps', 'content numStep')
+        // .populate('ingredients', 'unit quantity name')
+        // .populate('idComment', 'unit content name')
+        // .populate('Category', 'name')
 
 
 
-            
+
 
     } catch (error) {
         console.log('Get all recipe error:', error);
@@ -106,7 +106,10 @@ const updateById = async (id, title, description, image, ingredients, steps, cat
 const searchByTitle = async (title) => {
     try {
         const recipe = await recipeModel.find({ title })
-        console.log(recipe);
+        console.log("=========",recipe);
+        if (recipe.length===0) {
+            return false
+        }
         return recipe
 
     } catch (error) {
