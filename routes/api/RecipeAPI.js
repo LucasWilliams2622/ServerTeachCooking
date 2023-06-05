@@ -33,7 +33,7 @@ router.get('/get-by-id/', async (req, res, next) => {
 // http://localhost:3001/recipe/api/search-by-title
 router.get('/search-by-title', [], async (req, res, next) => {
     try {
-        const { title } = req.body;
+        const { title } = req.query;
         console.log(title)
         const recipe = await recipeController.searchByTitle(title);
         if (recipe) {

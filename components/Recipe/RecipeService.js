@@ -4,8 +4,8 @@ const getAllRecipe = async (page, size) => {
     try {
         return recipeModel.find({}, 'title description image ingredients steps idComment author idVideo ')
             .populate('author', 'name avatar')
-            .populate('steps', 'content numStep')
-            .populate('ingredients', 'unit quantity name')
+            // .populate('steps', 'content numStep')
+            // .populate('ingredients', 'unit quantity name')
             // .populate('idComment', 'unit content name')
             // .populate('Category', 'name')
 
