@@ -27,6 +27,19 @@ router.post('/login', async (req, res, next) => {
             .json({ result: false, message: 'Error System' })
     }
 })
+//http://localhost:3000/user/api/loginGoogle
+router.post('/loginGoogle', async (req, res, next) => {
+    try {
+        const { email, name, avatar } = req.body;
+        const user = await userController.loginGoogle(email, name, avatar);
+        if (user) {
+            return res.status(200).json({ result: true, user: user, message: "Login Google Success" });
+        }
+        return res.status(400).json({ result: false, user: null, token: null, message: "Login Google Failed" });
+    } catch (error) {
+        return res.status(500).json({ result: false, message: 'Error System' })
+    }
+});
 //http://localhost:3000/user/api/register
 router.post('/register', [], async (req, res, next) => {
     try {

@@ -26,10 +26,10 @@ var StepAPIRouter = require('./routes/api/StepAPI')
 // CPANEL
 
 var app = express();
-const port = process.env.PORT || 3001;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// const port = process.env.PORT || 3001;
+// app.listen(port, () => {
+//   console.log(`Server is running on port ${port}`);
+// });
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
