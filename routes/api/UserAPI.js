@@ -169,6 +169,19 @@ router.post('/change-password', [], async (req, res, next) => {
         res.status(500).json({ message: 'Lỗi máy chủ' });
     }
 });
+// http://localhost:3001/user/api/get-by-id/
+router.get('/get-by-id/', async (req, res, next) => {
+    try {
+        const { id } = req.query;
+        const user = await userController.getById(id);
+        if (user) {
+            return res.status(200).json({ result: true, user: user, error: false });
+        }
+        return res.status(400).json({ result: false, user: null, error: true });
 
+    } catch (error) {
+        return res.status(500).json({ result: false, product: null });
+    }
+});
 
 module.exports = router;

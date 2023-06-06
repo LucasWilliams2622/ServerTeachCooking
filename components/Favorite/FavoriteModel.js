@@ -5,5 +5,7 @@ const favoriteSchema = new Schema({
     id: { type: ObjectId },
     idRecipe:{type:ObjectId,ref:'Recipe'},
     idUser:{type:ObjectId,ref:'User'},
+    idAuthor:{type:ObjectId},
+
 })
 module.exports = mongoose.models.favorite || mongoose.model('Favorite', favoriteSchema);

@@ -19,15 +19,15 @@ const loginGoogle = async (email, avatar, name) => {
     try {
         const user = await UserModel.findOne({ email: email })
         if (user) {
-            user.isLogin = true;
-            return true;
+            // user.isLogin = true;
+            return user;
         } else {
             const newUser = { email, avatar, name };
             const u = new UserModel(newUser);
             await u.save();
             user.isLogin = true;
 
-            return true;
+            return newUser;
         }
     } catch (error) {
         console.log('loginGoogle error' + error)
@@ -148,7 +148,20 @@ const changePassword = async (email, oldPassword, newPassword) => {
     }
 }
 
+const getById = async (id) => {
+    try {
+        const user = await UserModel.findById({ _id:id });
+        if (user != null) {
+            return user
+        } return false
+    } catch (error) {
+        console.log("Get product by id error " + error);
+        return null;
+    }
+}
+
 module.exports = {
-    login, register, deleteUser,loginGoogle,
-    updateUser, getAllUser, search, changePassword
+    login, register, deleteUser, loginGoogle,
+    updateUser, getAllUser, search, changePassword,
+    getById,
 };

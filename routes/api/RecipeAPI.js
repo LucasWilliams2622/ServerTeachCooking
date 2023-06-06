@@ -7,9 +7,7 @@ const upLoadImage = require("../../MiddleWare/UpLoadImage")
 router.get('/get-all', [], async (req, res, next) => {
     try {
         const recipe = await recipeController.getAllRecipe();
-        console.log(recipe)
         return res.status(200).json({ result: true, recipe: recipe, error: false });
-
     } catch (error) {
         return res.status(500).json({ result: false, recipe: null });
     }
@@ -47,7 +45,7 @@ router.get('/search-by-title', [], async (req, res, next) => {
 // http://localhost:3001/recipe/api/search-by-author
 router.get('/search-by-author', [], async (req, res, next) => {
     try {
-        const { author } = req.body;
+        const { author } = req.query;
         console.log(author)
         const recipe = await recipeController.searchByAuthor(author);
         if (recipe) {
