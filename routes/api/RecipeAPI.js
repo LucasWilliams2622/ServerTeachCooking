@@ -29,7 +29,7 @@ router.get('/get-by-id/', async (req, res, next) => {
     }
 });
 // http://localhost:3001/recipe/api/search-by-title
-router.post('/search-by-title', [], async (req, res, next) => {
+router.get('/search-by-title', [], async (req, res, next) => {
     try {
         const { title } = req.query;
         console.log(title)
