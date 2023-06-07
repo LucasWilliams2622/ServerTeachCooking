@@ -1,12 +1,14 @@
 const FavoriteModel = require('./FavoriteModel');
+const RecipeModel = require('../Recipe/RecipeModel');
 
-const getAllFavorite = async (page, size) => {
+
+const getAllFavorite = async (idUser) => {
     try {
-        return await FavoriteModel.find({}, 'idUser idRecipe')
+        return await FavoriteModel.find({ }, 'idUser idRecipe')
             .populate("idUser", "email name")
-            .populate('idRecipe', "title description image steps ingredients author")
-            .populate("idRecipe.steps","content numStep")
-            .populate("idRecipe.ingredients","name quantity unit")
+            .populate('idRecipe', "title description image steps ingredients author time")
+            .populate("idRecipe.steps", "content numStep")
+            .populate("idRecipe.ingredients", "name quantity unit")
 
 
             ;
@@ -18,11 +20,7 @@ const getAllFavorite = async (page, size) => {
 
 const deleteFavoriteById = async (id) => {
     try {
-        const recipe = await FavoriteModel.findOne({ id: id });
-        console.log(recipe);
-        {
-             FavoriteModel.deleteOne(recipe)
-        }
+        await FavoriteModel.findOneAndDelete({ id: id });
         return true;
     } catch (error) {
         console.log('Deleta Favorite by id error: ', error);
@@ -32,12 +30,20 @@ const deleteFavoriteById = async (id) => {
 
 const addNewFavorite = async (idUser, idRecipe) => {
     try {
-       
 
-        const recipe = await FavoriteModel.findOne({ idRecipe: idRecipe });
-        console.log("=======>", recipe);
-        if (recipe) {
-            return false
+        const user = await FavoriteModel.find({ idUser: idUser })
+        console.log("USER", user);
+        if (user != null) {
+            const recipe = await FavoriteModel.findOne({ idUser: idUser, idRecipe: idRecipe });
+            console.log("=======>", recipe);
+            if (recipe) {
+                return false
+            } else {
+                const newFavorite = { idUser, idRecipe };
+                const p = new FavoriteModel(newFavorite);
+                await p.save();
+                return true;
+            }
         } else {
             const newFavorite = { idUser, idRecipe };
             const p = new FavoriteModel(newFavorite);
@@ -45,37 +51,44 @@ const addNewFavorite = async (idUser, idRecipe) => {
             return true;
         }
 
+
     } catch (error) {
         // console.log('Add new Favorite error: ', error);
         return false;
     }
 }
 
-const getFavoriteById = async (idUser) => {
+const getFavoriteByIdUser = async (idUser) => {
     try {
-        return await FavoriteModel.findById(idUser);
+        const favorite = await FavoriteModel.find({ idUser: idUser }, 'idUser idRecipe')
+        .populate("idUser", "email name")
+        .populate('idRecipe', "title description image steps ingredients author time")
+        .populate("idRecipe.steps", "content numStep")
+        .populate("idRecipe.ingredients", "name quantity unit")
+        .populate("idRecipe.author", "name avatar")
+
+        console.log(favorite);
+        if (favorite!=null) {
+            return favorite
+        }
+        return false
+
     } catch (error) {
         console.log("Get product by id error " + error);
         return null;
     }
 }
 
-// tim kien san pham theo ten
-const searchFavoriteByName = async (name) => {
+const getByIdRecipe = async (id) => {
     try {
-        return await FavoriteModel.find({
-            name:
-                // ten co chua , ko phan biet hoa thuong
-                { $regex: name, $options: 'i' },
-            $or: [{ quantity: { $lt: 5 } }, { quantity: { $gt: 50 } }]
-        });
+        return recipeModel.findById(id);
     } catch (error) {
-        console.log('search Favorite by name error ', error);
-
+        console.log("Get product by id error " + error);
+        return null;
     }
-    return null;
 }
 
 
-module.exports = { getAllFavorite, deleteFavoriteById, addNewFavorite, getFavoriteById, searchFavoriteByName, };
+
+module.exports = { getAllFavorite, deleteFavoriteById, addNewFavorite, getFavoriteByIdUser, };
 

@@ -5,11 +5,11 @@ const ObjectId = Schema.ObjectId;
 const recipeSchema = new mongoose.Schema({
   id: { type: ObjectId },
   title: { type: String, required: true },
-  description: { type: String, required: false },
+  description: { type: String, required: true },
   image: { type: String, required: true, },
 
-  ingredients: { type: [String], ref: 'Ingredient', required: true },
-  steps: { type: [String], ref: 'Step', required: true },
+  ingredients: [{ type: ObjectId, ref: 'Ingredient', required: true }],
+  steps: [{ type: ObjectId, ref: 'Step', required: true }],
   category: { type: [String], ref: 'Category' },
   idComment: { type: [String], ref: 'Comment', },
   author: { type: ObjectId, required: true, ref: 'User', },
@@ -17,7 +17,7 @@ const recipeSchema = new mongoose.Schema({
   idVideo: { type: String, },
   difficulty: { type: String, },
   mealType: { type: String, },
-  time: { type: Number, default: 1 },
+  time: { type: Number, default: 2 },
   createdAt: { type: Date, default: Date.now, },
   updatedAt: { type: Date, default: Date.now, },
 

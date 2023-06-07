@@ -7,9 +7,7 @@ const upLoadImage = require("../../MiddleWare/UpLoadImage")
 router.get('/get-all', [], async (req, res, next) => {
     try {
         const recipe = await recipeController.getAllRecipe();
-        console.log(recipe)
         return res.status(200).json({ result: true, recipe: recipe, error: false });
-
     } catch (error) {
         return res.status(500).json({ result: false, recipe: null });
     }
@@ -33,13 +31,13 @@ router.get('/get-by-id/', async (req, res, next) => {
 // http://localhost:3001/recipe/api/search-by-title
 router.post('/search-by-title', [], async (req, res, next) => {
     try {
-        const { title } = req.body;
+        const { title } = req.query;
         console.log(title)
         const recipe = await recipeController.searchByTitle(title);
         if (recipe) {
             return res.status(200).json({ result: true, recipe: recipe });
         }
-        return res.status(400).json({ result: false });
+        return res.status(200).json({ result: false });
     } catch (error) {
         return res.status(500).json({ result: false, recipe: null });
     }
@@ -47,7 +45,7 @@ router.post('/search-by-title', [], async (req, res, next) => {
 // http://localhost:3001/recipe/api/search-by-author
 router.get('/search-by-author', [], async (req, res, next) => {
     try {
-        const { author } = req.body;
+        const { author } = req.query;
         console.log(author)
         const recipe = await recipeController.searchByAuthor(author);
         if (recipe) {
@@ -101,7 +99,7 @@ router.post('/new', [upLoadImage.single('image')], async (req, res, next) => {
     try {
         let { file, body } = req;
         if (file) {
-            file = `http://192.168.2.8:3000/images/${file.filename}`;
+            file = `http://10.0.2.2:3000/images/${file.filename}`;
             body = { ...body, image: file };
         }
         const { title, description, image, ingredients, steps, category, idComment, author, idVideo, time, difficulty, mealType, createdAt, updatedAt } = body;
@@ -114,7 +112,7 @@ router.post('/new', [upLoadImage.single('image')], async (req, res, next) => {
     }
 });
 
-//     http://localhost:3000/recipe/api/upload-image
+//http://localhost:3000/recipe/api/upload-image
 router.post('/upload-image', [upLoadImage.single('image')], async (req, res, next) => {
     try {
         const { file } = req;

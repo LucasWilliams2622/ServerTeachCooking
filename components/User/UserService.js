@@ -14,6 +14,26 @@ const login = async (email, password) => {
         return false;
     }
 }
+//http://localhost:3000/api/user/loginGoogle
+const loginGoogle = async (email, avatar, name) => {
+    try {
+        const user = await UserModel.findOne({ email: email })
+        if (user) {
+            // user.isLogin = true;
+            return user;
+        } else {
+            const newUser = { email, avatar, name };
+            const u = new UserModel(newUser);
+            await u.save();
+            user.isLogin = true;
+
+            return newUser;
+        }
+    } catch (error) {
+        console.log('loginGoogle error' + error)
+        return false;
+    }
+}
 //http://localhost:3000/api/user/register
 const register = async (email, password, name, description, gender, dob, avatar, role, createAt, updateAt, isLogin) => {
     try {
@@ -128,7 +148,20 @@ const changePassword = async (email, oldPassword, newPassword) => {
     }
 }
 
+const getById = async (id) => {
+    try {
+        const user = await UserModel.findById({ _id:id });
+        if (user != null) {
+            return user
+        } return false
+    } catch (error) {
+        console.log("Get product by id error " + error);
+        return null;
+    }
+}
+
 module.exports = {
-    login, register, deleteUser,
-    updateUser, getAllUser, search, changePassword
+    login, register, deleteUser, loginGoogle,
+    updateUser, getAllUser, search, changePassword,
+    getById,
 };

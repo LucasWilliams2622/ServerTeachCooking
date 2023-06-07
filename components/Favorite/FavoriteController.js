@@ -1,17 +1,17 @@
 const favoriteService = require('./FavoriteService');
 
-const getAllFavorite = async (page, size) => {
+const getAllFavorite = async (idUser) => {
     try {
-        return await favoriteService.getAllFavorite(page, size);
+        return await favoriteService.getAllFavorite(idUser);
 
     } catch (error) {
         return false;
     }
 }
 
-const deleteFavoriteById = async (idRecipe) => {
+const deleteFavoriteById = async (id) => {
     try {
-        return await favoriteService.deleteFavoriteById(idRecipe);
+        return await favoriteService.deleteFavoriteById(id);
     } catch (error) {
         return false;
     }
@@ -20,15 +20,14 @@ const deleteFavoriteById = async (idRecipe) => {
 const addNewFavorite = async (idUser, idRecipe) => {
     try {
         return await favoriteService.addNewFavorite(idUser, idRecipe);
-
     } catch (error) {
         return false;
     }
 }
 
-const getFavoriteById = async (idUser) => {
+const getFavoriteByIdUser = async (idUser) => {
     try {
-        return await favoriteService.getFavoriteById(idUser);
+        return await favoriteService.getFavoriteByIdUser(idUser);
     } catch (error) {
         return null;
     }
@@ -43,13 +42,5 @@ const updateFavoriteById = async (id, name, quantity, unit) => {
     }
 }
 
-const searchFavoriteByName = async (name) => {
-    try {
-        return await favoriteService.searchFavoriteByName(name);
-    } catch (error) {
-        console.log('Search recipe by name error: ', error);
 
-    }
-    return null;
-}
-module.exports = { getAllFavorite, deleteFavoriteById, addNewFavorite, getFavoriteById, updateFavoriteById, searchFavoriteByName };
+module.exports = { getAllFavorite, deleteFavoriteById, addNewFavorite, getFavoriteByIdUser, updateFavoriteById,  };

@@ -2,12 +2,17 @@ const recipeModel = require('./RecipeModel');
 
 const getAllRecipe = async (page, size) => {
     try {
-        return await recipeModel.find({}, 'title description image ingredients steps idComment author idVideo ')
-        .populate('author', 'name avatar')
-        .populate('steps', 'content numStep')
-        .populate('ingredients', 'unit quantity name')
-        // .populate('idComment', 'unit content name')
-        // .populate('Category', 'name')
+        return recipeModel.find({}, 'title description time image ingredients steps idComment author idVideo ')
+            .populate('author', 'name avatar')
+            .populate('steps', 'content numStep')
+            .populate('ingredients', 'unit quantity name')
+            // .populate('idComment', 'unit content name')
+            // .populate('Category', 'name')
+
+
+
+            
+
     } catch (error) {
         console.log('Get all recipe error:', error);
         throw error;
@@ -32,8 +37,11 @@ const getAllRecipe_vs2 = async (page, size) => {
 
 const deleteById = async (id) => {
     try {
-        await recipeModel.findByIdAndDelete(id);
-        return true;
+        const recipe = await recipeModel.findByIdAndDelete(id);
+        if (recipe!=null) {
+            return true;
+        }
+        return false
     } catch (error) {
         console.log('Deleta product by id error: ', error);
         return false;
@@ -101,7 +109,10 @@ const updateById = async (id, title, description, image, ingredients, steps, cat
 const searchByTitle = async (title) => {
     try {
         const recipe = await recipeModel.find({ title })
-        console.log(recipe);
+        console.log("=========", recipe);
+        if (recipe.length === 0) {
+            return false
+        }
         return recipe
 
     } catch (error) {
@@ -114,7 +125,6 @@ const searchByAuthor = async (author) => {
         const recipe = await recipeModel.find({ author })
         console.log(recipe);
         return recipe
-
     } catch (error) {
         console.log('search recipe by name error ', error);
     }

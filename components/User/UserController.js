@@ -18,6 +18,14 @@ const register = async (email, password, name, description, gender, dob, avatar,
         return false;
     }
 }
+const loginGoogle = async ( email, name, avatar) => {
+    try {
+        return await UserService.loginGoogle( email, name, avatar);
+    } catch (error) {
+        return false;
+    }
+}
+
 const deleteUser = async (email) => {
     try {
         return await UserService.deleteUser(email);
@@ -122,9 +130,17 @@ const verifyCode = async (email, verifyCode) => {
 
     }
 }
+const getById = async (id) => {
+    try {
+        return await UserService.getById(id);
+    } catch (error) {
+        return null;
+    }
+}
+
 module.exports = {
     login, register, deleteUser,
     updateUser, getAllUser, search,
     changePassword, sendMail, sendVerifyCode,
-    verifyCode
+    verifyCode,loginGoogle,getById
 };
