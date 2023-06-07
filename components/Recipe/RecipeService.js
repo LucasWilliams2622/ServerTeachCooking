@@ -103,7 +103,7 @@ const updateById = async (id, title, description, image, ingredients, steps, cat
 
 const searchByTitle = async (title) => {
     try {
-        const recipe = await recipeModel.find({ title }).populate('author', 'name avatar')
+        const recipe = await recipeModel.find({ title: { $regex: title, $options: 'i' }, }).populate('author', 'name avatar')
         console.log("=========", recipe);
         if (recipe.length === 0) {
             return false
