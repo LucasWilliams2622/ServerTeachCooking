@@ -4,7 +4,7 @@ const RecipeModel = require('../Recipe/RecipeModel');
 
 const getAllFavorite = async (idUser) => {
     try {
-        return await FavoriteModel.find({ }, 'idUser idRecipe')
+        return await FavoriteModel.find({}, 'idUser idRecipe')
             .populate("idUser", "email name")
             .populate('idRecipe', "title description image steps ingredients author time")
             .populate("idRecipe.steps", "content numStep")
@@ -18,10 +18,20 @@ const getAllFavorite = async (idUser) => {
     }
 }
 
-const deleteFavoriteById = async (id) => {
+const deleteFavoriteById = async (idRecipe, idUser) => {
     try {
-        await FavoriteModel.findOneAndDelete({ id: id });
-        return true;
+        const user = await FavoriteModel.find({ idUser: idUser })
+        console.log("======>",user);
+
+        if (user) {
+            const favorite = await FavoriteModel.findOneAndDelete({ _id: idRecipe, idUser: idUser });
+            console.log("====ibacsuiasc>",favorite);
+            return favorite;
+        } else {
+            return false;
+
+        }
+
     } catch (error) {
         console.log('Deleta Favorite by id error: ', error);
         return false;
@@ -61,14 +71,14 @@ const addNewFavorite = async (idUser, idRecipe) => {
 const getFavoriteByIdUser = async (idUser) => {
     try {
         const favorite = await FavoriteModel.find({ idUser: idUser }, 'idUser idRecipe')
-        .populate("idUser", "email name")
-        .populate('idRecipe', "title description image steps ingredients author time")
-        .populate("idRecipe.steps", "content numStep")
-        .populate("idRecipe.ingredients", "name quantity unit")
-        .populate("idRecipe.author", "name avatar")
+            .populate("idUser", "email name")
+            .populate('idRecipe', "title description image steps ingredients author time")
+            .populate("idRecipe.steps", "content numStep")
+            .populate("idRecipe.ingredients", "name quantity unit")
+            .populate("idRecipe.author", "name avatar")
 
         console.log(favorite);
-        if (favorite!=null) {
+        if (favorite != null) {
             return favorite
         }
         return false

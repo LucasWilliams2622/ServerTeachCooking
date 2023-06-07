@@ -2,8 +2,8 @@ const recipeModel = require('./RecipeModel');
 
 const getAllRecipe = async (page, size) => {
     try {
-        return recipeModel.find({}, 'title description time image ingredients steps idComment author idVideo ')
-            .populate('author', 'name avatar')
+        return recipeModel.find({}, 'title description time mealType image ingredients steps idComment author idVideo ')
+            .populate('author', 'name avatar email')
         // .populate('steps', 'content numStep')
         // .populate('ingredients', 'unit quantity name')
         // .populate('idComment', 'unit content name')

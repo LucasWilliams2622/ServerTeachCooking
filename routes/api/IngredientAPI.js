@@ -16,11 +16,11 @@ router.get('/get-all', [], async (req, res, next) => {
     }
 });
 
-//  http://localhost:3001/ingredient/api/get-by-id
-router.get('/get-by-id', async (req, res, next) => {
+//  http://localhost:3001/ingredient/api/get-by-idRecipe
+router.get('/get-by-idRecipe', async (req, res, next) => {
     try {
-        const { id } = req.query;
-        const ingredient = await ingredientController.getIngredientById(id);
+        const { idRecipe } = req.query;
+        const ingredient = await ingredientController.getIngredientById(idRecipe);
         if (ingredient) {
             return res.status(200).json({ result: true, ingredient: ingredient, message: "Success" });
         }
@@ -29,11 +29,11 @@ router.get('/get-by-id', async (req, res, next) => {
         return res.status(500).json({ result: false, product: null });
     }
 });
-// http://localhost:3001/ingredient/api/search-by-name
-router.get('/search-by-name', [], async (req, res, next) => {
+// http://localhost:3001/ingredient/api/search-by-idRecipe
+router.get('/search-by-idRecipe', [], async (req, res, next) => {
     try {
-        const { name } = req.query;
-        const ingredient = await ingredientController.searchIngredientByName(name);
+        const { idRecipe } = req.query;
+        const ingredient = await ingredientController.searchIngredientByName(idRecipe);
         if (ingredient) {
             return res.status(200).json({ result: true, ingredient: ingredient, message: "search success" });
         }
@@ -76,9 +76,9 @@ router.put('/update-by-id/', async (req, res, next) => {
 // http://localhost:3001/ingredient/api/new
 router.post('/new', async (req, res, next) => {
     try {
-        const { name, quantity, unit } = req.body;
-        console.log(name, quantity, unit)
-        const ingredient = await ingredientController.addNewIngredient(name, quantity, unit);
+        const { name, quantity, unit, idRecipe } = req.body;
+        console.log(quantity, unit, name,idRecipe)
+        const ingredient = await ingredientController.addNewIngredient(name, quantity, unit, idRecipe);
         if (ingredient) {
             return res.status(200).json({ result: true, ingredient: ingredient, message: "Add new success" });
         }
