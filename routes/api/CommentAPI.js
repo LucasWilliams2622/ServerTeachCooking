@@ -58,7 +58,8 @@ router.delete('/delete-by-name', async (req, res, next) => {
 router.get('/get-all', async (req, res, next) => {
     try {
         const comment = await commentController.getAllComment();
-        return res.status(200).json({ result: true, comment: comment });
+        if(comment){ return res.status(200).json({ result: true, comment: comment });}
+        return res.status(400).json({ result: false, comment: null });
     } catch (error) {
         return res.status(500).json({ result: false, comment: null });
 
