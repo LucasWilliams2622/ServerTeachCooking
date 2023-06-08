@@ -33,7 +33,7 @@ const addNewIngredient = async (name, quantity, unit, idRecipe) => {
 
 const getIngredientById = async (idRecipe) => {
     try {
-        return await ingredientModel.findById({ idRecipe: idRecipe });
+        return await ingredientModel.find({ idRecipe: idRecipe });
     } catch (error) {
         console.log("Get product by id error " + error);
         return null;
