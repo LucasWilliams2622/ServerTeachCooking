@@ -8,9 +8,9 @@ const getAllRecipe = async () => {
     }
 }
 
-const deleteById = async (id) => {
+const deleteById = async (_id,idUser) => {
     try {
-        return await recipeService.deleteById(id);
+        return await recipeService.deleteById(_id,idUser);
     } catch (error) {
         return false;
     }

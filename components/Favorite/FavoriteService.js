@@ -76,8 +76,7 @@ const getFavoriteByIdUser = async (idUser) => {
             .populate("idRecipe.steps", "content numStep")
             .populate("idRecipe.ingredients", "name quantity unit")
             .populate("idRecipe.author", "name avatar")
-
-        console.log(favorite);
+        // console.log(favorite);
         if (favorite != null) {
             return favorite
         }

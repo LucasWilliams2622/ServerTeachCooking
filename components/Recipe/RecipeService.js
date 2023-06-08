@@ -30,13 +30,20 @@ const getAllRecipe_vs2 = async (page, size) => {
     }
 }
 
-const deleteById = async (id) => {
+const deleteById = async (_id, idUser) => {
     try {
-        const recipe = await recipeModel.findByIdAndDelete(id);
-        if (recipe != null) {
-            return true;
+        const user = await recipeModel.findOne({ author: idUser })
+        console.log(user);
+        if (user) {
+            const recipe = await recipeModel.findOneAndDelete({ _id: _id, author: idUser });
+            console.log("============>",recipe)
+            if (recipe != null) {
+                return true;
+            }
+        } else {
+            return false
         }
-        return false
+
     } catch (error) {
         console.log('Deleta product by id error: ', error);
         return false;

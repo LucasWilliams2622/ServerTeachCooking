@@ -59,11 +59,11 @@ router.get('/search-by-author', [], async (req, res, next) => {
 // http://localhost:3001/recipe/api/delete-by-id
 router.delete('/delete-by-id', async (req, res, next) => {
     try {
-        const { id } = req.query;
-        const recipe = await recipeController.deleteById(id);
+        const { _id,idUser } = req.query;
+        console.log("_id,idUser",_id,idUser);
+        const recipe = await recipeController.deleteById(_id,idUser);
         if (recipe) {
             return res.status(200).json({ result: true, message: "Delete Success" });
-
         }
         return res.status(400).json({ result: false, message: "Delete Failed" });
 
