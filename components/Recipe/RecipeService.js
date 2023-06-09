@@ -68,7 +68,7 @@ const addNewRecipe = async (title, description, image, ingredients, steps, categ
 
 const getById = async (id) => {
     try {
-        return recipeModel.findById(id);
+        return recipeModel.findById(id).populate('author', 'name avatar email');
     } catch (error) {
         console.log("Get product by id error " + error);
         return null;
