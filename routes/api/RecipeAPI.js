@@ -14,7 +14,7 @@ router.get('/get-all', [], async (req, res, next) => {
 });
 
 // http://localhost:3001/recipe/api/get-by-id/
-router.get('/get-by-id/', async (req, res, next) => {
+router.get('/get-by-id', async (req, res, next) => {
     try {
         const { id } = req.query;
         const recipe = await recipeController.getById(id);
@@ -22,7 +22,7 @@ router.get('/get-by-id/', async (req, res, next) => {
             return res.status(200).json({ result: true, recipe: recipe, error: false });
 
         }
-        return res.status(200).json({ result: false, recipe: null, error: true });
+        return res.status(400).json({ result: false, recipe: null, error: true });
 
     } catch (error) {
         return res.status(500).json({ result: false, product: null });

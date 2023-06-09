@@ -8,8 +8,8 @@ const recipeSchema = new mongoose.Schema({
   description: { type: String, required: true },
   image: { type: String, required: true, },
 
-  ingredients: [{ type: ObjectId, ref: 'Ingredient', required: true }],
-  steps: [{ type: ObjectId, ref: 'Step', required: true }],
+  ingredients: { type: [String], required: true },
+  steps: { type: [String], required: true },
   category: { type: [String], ref: 'Category' },
   idComment: { type: [String], ref: 'Comment', },
   author: { type: ObjectId, required: true, ref: 'User', },
@@ -22,7 +22,7 @@ const recipeSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now, },
 
 
- 
+
 });
 
 

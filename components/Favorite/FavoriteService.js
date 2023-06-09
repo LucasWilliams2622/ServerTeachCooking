@@ -4,7 +4,7 @@ const RecipeModel = require('../Recipe/RecipeModel');
 
 const getAllFavorite = async (idUser) => {
     try {
-        return await FavoriteModel.find({ }, 'idUser idRecipe')
+        return await FavoriteModel.find({}, 'idUser idRecipe')
             .populate("idUser", "email name")
             .populate('idRecipe', "title description image steps ingredients author time")
             .populate("idRecipe.steps", "content numStep")
@@ -61,14 +61,14 @@ const addNewFavorite = async (idUser, idRecipe) => {
 const getFavoriteByIdUser = async (idUser) => {
     try {
         const favorite = await FavoriteModel.find({ idUser: idUser }, 'idUser idRecipe')
-        .populate("idUser", "email name")
-        .populate('idRecipe', "title description image steps ingredients author time")
-        .populate("idRecipe.steps", "content numStep")
-        .populate("idRecipe.ingredients", "name quantity unit")
-        .populate("idRecipe.author", "name avatar")
+            .populate("idUser", "email name")
+            .populate('idRecipe', "title description image steps ingredients author time")
+            .populate("idRecipe.steps", "content numStep")
+            .populate("idRecipe.ingredients", "name quantity unit")
+            .populate("idRecipe.author", "name avatar")
 
         console.log(favorite);
-        if (favorite!=null) {
+        if (favorite != null) {
             return favorite
         }
         return false
@@ -88,7 +88,24 @@ const getByIdRecipe = async (id) => {
     }
 }
 
+const searchByTitle = async (title) => {
+    try {
+        const recipe = await FavoriteModel.find({ }, 'idUser idRecipe')
+            .populate("idUser", "email name")
+            .populate('idRecipe', "title description image steps ingredients author time")
+            .populate("idRecipe.steps", "content numStep")
+            .populate("idRecipe.ingredients", "name quantity unit")
 
+        if (recipe.length === 0) {
+            return false
+        }
+        return recipe
+
+    } catch (error) {
+        console.log('search recipe by name error ', error);
+    }
+    return null;
+}
 
 module.exports = { getAllFavorite, deleteFavoriteById, addNewFavorite, getFavoriteByIdUser, };
 
