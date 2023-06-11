@@ -5,7 +5,7 @@ const RecipeModel = require('../Recipe/RecipeModel');
 const getAllFavorite = async (idUser) => {
     try {
         return await FavoriteModel.find({}, 'idUser idRecipe')
-            .populate("idUser", "email name")
+            .populate("idUser", "email avatar name")
             .populate('idRecipe', "title description image steps ingredients author time")
             .populate("idRecipe.steps", "content numStep")
             .populate("idRecipe.ingredients", "name quantity unit")
