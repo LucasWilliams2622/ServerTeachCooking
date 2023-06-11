@@ -4,13 +4,16 @@ const ObjectId = Schema.ObjectId;
 
 const stepSchema = new mongoose.Schema({
   id: { type: ObjectId },
-  content:{
+  description:{
     type:String,
   },
-  numStep:{
+  order:{
     type:Number,
-  }
-
+  },
+  idRecipes: [{
+    type: ObjectId,
+    ref: 'Recipe'
+  }]
 });
 
 

@@ -20,7 +20,7 @@ var RecipeAPIRouter = require('./routes/api/RecipeAPI')
 var StepAPIRouter = require('./routes/api/StepAPI')
 
 
-
+require('./components/User/UserModel');
 
 
 // CPANEL

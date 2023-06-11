@@ -6,7 +6,7 @@ const favoriteController = require('../../components/Favorite/FavoriteController
 // http://localhost:3000/favorite/api/get-all
 router.get('/get-all', [], async (req, res, next) => {
     try {
-        const {idUser} = req.query
+        const { idUser } = req.query
         const favorite = await favoriteController.getAllFavorite(idUser);
         if (favorite) {
             return res.status(200).json({ message: "Success", result: true, favorite: favorite, });
@@ -33,11 +33,12 @@ router.get('/get-by-idUser', async (req, res, next) => {
 });
 
 
-// http://localhost:3000/favorite/api/delete-by-idRecipe/
+// http://localhost:3000/favorite/api/delete-by-id
 router.delete('/delete-by-id', async (req, res, next) => {
     try {
-        const { id } = req.query;
-        const favorite = await favoriteController.deleteFavoriteById(id);
+        const { idRecipe, idUser } = req.query;
+        console.log(idRecipe, idUser);
+        const favorite = await favoriteController.deleteFavoriteById(idRecipe, idUser);
         if (favorite) {
             return res.status(200).json({ result: true, favorite: favorite, message: "delete success" });
         }

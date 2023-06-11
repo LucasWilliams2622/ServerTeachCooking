@@ -9,9 +9,9 @@ const getAllFavorite = async (idUser) => {
     }
 }
 
-const deleteFavoriteById = async (id) => {
+const deleteFavoriteById = async ( idRecipe,idUser) => {
     try {
-        return await favoriteService.deleteFavoriteById(id);
+        return await favoriteService.deleteFavoriteById( idRecipe,idUser);
     } catch (error) {
         return false;
     }

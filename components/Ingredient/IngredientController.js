@@ -17,18 +17,18 @@ const deleteIngredientById = async (id) => {
     }
 }
 
-const addNewIngredient = async (name, quantity, unit) => {
+const addNewIngredient = async (name, quantity, unit, idRecipe) => {
     try {
-        return await ingredientService.addNewIngredient(name, quantity, unit);
+        return await ingredientService.addNewIngredient(name, quantity, unit, idRecipe);
 
     } catch (error) {
         return false;
     }
 }
 
-const getIngredientById = async (id) => {
+const getIngredientById = async (idRecipe) => {
     try {
-        return await ingredientService.getIngredientById(id);
+        return await ingredientService.getIngredientById(idRecipe);
     } catch (error) {
         return null;
     }
@@ -43,9 +43,9 @@ const updateIngredientById = async (id, name, quantity, unit) => {
     }
 }
 
-const searchIngredientByName = async (name) => {
+const searchIngredientByName = async (idRecipe) => {
     try {
-        return await ingredientService.searchIngredientByName(name);
+        return await ingredientService.searchIngredientByName(idRecipe);
     } catch (error) {
         console.log('Search recipe by name error: ', error);
 

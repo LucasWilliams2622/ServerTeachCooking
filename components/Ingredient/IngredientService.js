@@ -4,7 +4,7 @@ const getAllIngredient = async (page, size) => {
     try {
         return await ingredientModel.find();
     } catch (error) {
-        console.log('Get all ingrediente error:', error);
+        console.log('Get all ingredient error:', error);
         throw error;
     }
 }
@@ -14,26 +14,26 @@ const deleteIngredientById = async (id) => {
         await ingredientModel.findByIdAndDelete(id);
         return true;
     } catch (error) {
-        console.log('Deleta ingredient by id error: ', error);
+        console.log('Delete ingredient by id error: ', error);
         return false;
     }
 }
 
-const addNewIngredient = async (name, quantity, unit) => {
+const addNewIngredient = async (name, quantity, unit, idRecipe) => {
     try {
-        const newIngredient = { name, quantity, unit };
+        const newIngredient = { name, quantity, unit, idRecipe };
         const p = new ingredientModel(newIngredient);
         await p.save();
         return true;
     } catch (error) {
-        // console.log('Add new Ingredient error: ', error);
+        console.log('Add new Ingredient error: ', error);
         return false;
     }
 }
 
-const getIngredientById = async (id) => {
+const getIngredientById = async (idRecipe) => {
     try {
-        return await ingredientModel.findById(id);
+        return await ingredientModel.find({ idRecipe: idRecipe });
     } catch (error) {
         console.log("Get product by id error " + error);
         return null;
@@ -60,14 +60,16 @@ const updateIngredientById = async (id, name, quantity, unit) => {
 }
 
 // tim kien san pham theo ten
-const searchIngredientByName = async (name) => {
+const searchIngredientByName = async (idRecipe) => {
     try {
-        return await ingredientModel.find({
-            name:
-                // ten co chua , ko phan biet hoa thuong
-                { $regex: name, $options: 'i' },
-            $or: [{ quantity: { $lt: 5 } }, { quantity: { $gt: 50 } }]
-        });
+        const ingredient = await ingredientModel.find({ idRecipe: idRecipe})
+        console.log(ingredient);
+        if (ingredient!=null) {
+            return ingredient
+        }
+        else {
+            return false
+        }
     } catch (error) {
         console.log('search Ingredient by name error ', error);
 

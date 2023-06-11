@@ -102,7 +102,10 @@ router.post('/new', [upLoadImage.single('image')], async (req, res, next) => {
             file = `http://10.0.2.2:3000/images/${file.filename}`;
             body = { ...body, image: file };
         }
-        const { title, description, image, ingredients, steps, category, idComment, author, idVideo, time, difficulty, mealType, createdAt, updatedAt } = body;
+        const { title, description, image, ingredients,
+            steps, category, idComment, author,
+            idVideo, time, difficulty, mealType,
+            createdAt, updatedAt } = body;
         const recipe = await recipeController.addNewRecipe(title, description, image, ingredients,
             steps, category, idComment, author, idVideo,
             time, difficulty, mealType, createdAt, updatedAt);
