@@ -1,7 +1,6 @@
 const FavoriteModel = require('./FavoriteModel');
 const RecipeModel = require('../Recipe/RecipeModel');
 
-
 const getAllFavorite = async (idUser) => {
     try {
         return await FavoriteModel.find({}, 'idUser idRecipe')
@@ -9,9 +8,6 @@ const getAllFavorite = async (idUser) => {
             .populate('idRecipe', "title description image steps ingredients author time")
             .populate("idRecipe.steps", "content numStep")
             .populate("idRecipe.ingredients", "name quantity unit")
-
-
-            ;
     } catch (error) {
         console.log('Get all Favoritee error:', error);
         throw error;
@@ -21,17 +17,16 @@ const getAllFavorite = async (idUser) => {
 const deleteFavoriteById = async (idRecipe, idUser) => {
     try {
         const user = await FavoriteModel.find({ idUser: idUser })
-        console.log("======>",user);
+        console.log("======>", user);
 
         if (user) {
             const favorite = await FavoriteModel.findOneAndDelete({ _id: idRecipe, idUser: idUser });
-            console.log("====ibacsuiasc>",favorite);
+            console.log("====ibacsuiasc>", favorite);
             return favorite;
         } else {
             return false;
 
         }
-
     } catch (error) {
         console.log('Deleta Favorite by id error: ', error);
         return false;
@@ -40,7 +35,6 @@ const deleteFavoriteById = async (idRecipe, idUser) => {
 
 const addNewFavorite = async (idUser, idRecipe) => {
     try {
-
         const user = await FavoriteModel.find({ idUser: idUser })
         console.log("USER", user);
         if (user != null) {
@@ -60,10 +54,8 @@ const addNewFavorite = async (idUser, idRecipe) => {
             await p.save();
             return true;
         }
-
-
     } catch (error) {
-        // console.log('Add new Favorite error: ', error);
+        console.log('Add new Favorite error: ', error);
         return false;
     }
 }
@@ -71,17 +63,18 @@ const addNewFavorite = async (idUser, idRecipe) => {
 const getFavoriteByIdUser = async (idUser) => {
     try {
         const favorite = await FavoriteModel.find({ idUser: idUser }, 'idUser idRecipe')
-        .populate("idUser", "email name")
-        .populate('idRecipe', "title description image steps ingredients author time")
-        .populate("idRecipe.steps", "content numStep")
-        .populate("idRecipe.ingredients", "name quantity unit")
-        .populate("idRecipe.author", "name avatar")
+            .populate("idUser", "email name")
+            .populate('idRecipe', "title description image steps ingredients author time")
+            .populate("idRecipe.steps", "content numStep")
+            .populate("idRecipe.ingredients", "name quantity unit")
+            .populate("idRecipe.author", "name avatar")
 
         console.log(favorite);
-        if (favorite!=null) {
+        if (favorite != []) {
             return favorite
+        }else{
+            return false
         }
-        return false
 
     } catch (error) {
         console.log("Get product by id error " + error);
@@ -100,7 +93,7 @@ const getByIdRecipe = async (id) => {
 
 const searchByTitle = async (title) => {
     try {
-        const recipe = await FavoriteModel.find({ }, 'idUser idRecipe')
+        const recipe = await FavoriteModel.find({}, 'idUser idRecipe')
             .populate("idUser", "email name")
             .populate('idRecipe', "title description image steps ingredients author time")
             .populate("idRecipe.steps", "content numStep")
