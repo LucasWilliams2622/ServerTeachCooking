@@ -14,7 +14,7 @@ const recipeSchema = new mongoose.Schema({
   idComment: { type: [String], ref: 'Comment', },
   author: { type: ObjectId, required: true, ref: 'User', },
 
-  idVideo: { type: String, },
+  author: { type: String, },
   difficulty: { type: String, },
   mealType: { type: String, },
   time: { type: Number, default: 2 },
