@@ -17,11 +17,11 @@ const getAllFavorite = async (idUser) => {
 const deleteFavoriteById = async (idRecipe, idUser) => {
     try {
         const user = await FavoriteModel.find({ idUser: idUser })
-        console.log("======>", user);
+        // console.log("======>", user);
 
         if (user) {
             const favorite = await FavoriteModel.findOneAndDelete({ _id: idRecipe, idUser: idUser });
-            console.log("====ibacsuiasc>", favorite);
+            // console.log("====ibacsuiasc>", favorite);
             return favorite;
         } else {
             return false;
@@ -36,10 +36,10 @@ const deleteFavoriteById = async (idRecipe, idUser) => {
 const addNewFavorite = async (idUser, idRecipe) => {
     try {
         const user = await FavoriteModel.find({ idUser: idUser })
-        console.log("USER", user);
+        // console.log("USER", user);
         if (user != null) {
             const recipe = await FavoriteModel.findOne({ idUser: idUser, idRecipe: idRecipe });
-            console.log("=======>", recipe);
+            // console.log("=======>", recipe);
             if (recipe) {
                 return false
             } else {
@@ -69,7 +69,7 @@ const getFavoriteByIdUser = async (idUser) => {
             .populate("idRecipe.ingredients", "name quantity unit")
             .populate("idRecipe.author", "name avatar")
 
-        console.log(favorite);
+        // console.log(favorite);
         if (favorite != []) {
             return favorite
         }else{

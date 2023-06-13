@@ -32,7 +32,7 @@ router.get('/get-by-id', async (req, res, next) => {
 router.get('/search-by-title', [], async (req, res, next) => {
     try {
         const { title } = req.query;
-        console.log(title)
+        // console.log(title)
         const recipe = await recipeController.searchByTitle(title);
         if (recipe) {
             return res.status(200).json({ result: true, recipe: recipe });
@@ -46,7 +46,7 @@ router.get('/search-by-title', [], async (req, res, next) => {
 router.get('/search-by-author', [], async (req, res, next) => {
     try {
         const { author } = req.query;
-        console.log(author)
+        // console.log(author)
         const recipe = await recipeController.searchByAuthor(author);
         if (recipe) {
             return res.status(200).json({ result: true, recipe: recipe });
@@ -60,7 +60,7 @@ router.get('/search-by-author', [], async (req, res, next) => {
 router.delete('/delete-by-id', async (req, res, next) => {
     try {
         const { _id,idUser } = req.query;
-        console.log("_id,idUser",_id,idUser);
+        // console.log("_id,idUser",_id,idUser);
         const recipe = await recipeController.deleteById(_id,idUser);
         if (recipe) {
             return res.status(200).json({ result: true, message: "Delete Success" });

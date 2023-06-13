@@ -42,9 +42,9 @@ router.delete('/delete-by-id', async (req, res, next) => {
 router.delete('/delete-by-name', async (req, res, next) => {
     try {
         const { name } = req.query;
-        console.log(name)
+        // console.log(name)
         const comment = await commentController.deleteCommentByName(name);
-        console.log(comment)
+        // console.log(comment)
         if (comment) {
             return res.status(200).json({ message: 'delete success', result: true, comment: comment });
         }

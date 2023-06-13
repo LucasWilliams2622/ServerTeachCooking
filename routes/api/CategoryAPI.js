@@ -61,7 +61,7 @@ router.put('/update-by-id', [], async (req, res, next) => {
     try {
         const { id } = req.query;
         const { name } = req.body;
-        console.log(name,id)
+        // console.log(name,id)
         const category = await categoryController.updateCategoryById(id, name);
          if (category) {
             return res.status(200).json({ message: "Add new success", result: true, category: category });

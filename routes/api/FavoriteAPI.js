@@ -37,7 +37,7 @@ router.get('/get-by-idUser', async (req, res, next) => {
 router.delete('/delete-by-id', async (req, res, next) => {
     try {
         const { idRecipe, idUser } = req.query;
-        console.log(idRecipe, idUser);
+        // console.log(idRecipe, idUser);
         const favorite = await favoriteController.deleteFavoriteById(idRecipe, idUser);
         if (favorite) {
             return res.status(200).json({ result: true, favorite: favorite, message: "delete success" });
@@ -51,7 +51,7 @@ router.delete('/delete-by-id', async (req, res, next) => {
 router.post('/new-to-favorite', async (req, res, next) => {
     try {
         const { idUser, idRecipe } = req.body;
-        console.log(idUser, idRecipe)
+        // console.log(idUser, idRecipe)
         const favorite = await favoriteController.addNewFavorite(idUser, idRecipe);
         if (favorite) {
             return res.status(200).json({ result: true, favorite: favorite, message: "Add new success" });
