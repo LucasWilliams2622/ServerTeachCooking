@@ -8,9 +8,9 @@ const userController = require('../../components/User/UserController')
 router.post('/login', async (req, res, next) => {
     try {
         const { email, password } = req.body;
-        console.log(email, password)
+        // console.log(email, password)
         const user = await userController.login(email, password);
-        console.log("aaaaaaaaa", user)
+        // console.log("aaaaaaaaa", user)
         if (user) {
             const token = jwt.sign({ user }, 'secret', { expiresIn: '1h' })
             return res.status(200).json({ result: true, user: user, token: token, message: "Login Success" });
@@ -45,9 +45,9 @@ router.post('/register', [], async (req, res, next) => {
     try {
         const { email, password, name, description,
             gender, dob, avatar, role, createAt, updateAt, isLogin } = req.body;
-        console.log(email, password, name, description, gender, dob, avatar, role, createAt, updateAt, isLogin)
+        // console.log(email, password, name, description, gender, dob, avatar, role, createAt, updateAt, isLogin)
         const user = await userController.register(email, password, name, description, gender, dob, avatar, role, createAt, updateAt, isLogin);
-        console.log(user)
+        // console.log(user)
         if (user) {
             return res.status(200).json({ result: true, user: user, message: "Register Success" });
         }
@@ -63,12 +63,11 @@ router.put('/update', async (req, res, next) => {
     try {
         const { email, password, name, description,
             gender, dob, avatar, role, createAt, updateAt, isLogin } = req.body;
-        console.log(email, password, name, description,
-            gender, dob, avatar, role, createAt, updateAt, isLogin);
+        // console.log(email, password, name, description,gender, dob, avatar, role, createAt, updateAt, isLogin);
 
         const user = await userController.updateUser(email, password, name, description,
             gender, dob, avatar, role, createAt, updateAt, isLogin);
-        console.log(user)
+        // console.log(user)
         if (user) {
             return res.status(200).json({ result: true, user: user, message: "Update Success" })
         } else {
@@ -83,7 +82,7 @@ router.put('/update', async (req, res, next) => {
 router.get('/list', async (req, res, next) => {
     try {
         const users = await userController.getAllUser();
-        console.log(users)
+        // console.log(users)
         return res.status(200).json({ result: true, users: users });
     } catch (error) {
         console.log("List User:" + error)
@@ -106,9 +105,9 @@ router.post('/send-mail', async (req, res, next) => {
 router.get('/search', async (req, res, next) => {
     try {
         let { email } = req.body;
-        console.log(email)
+        // console.log(email)
         const user = await userController.search(email);
-        console.log(user);
+        // console.log(user);
         if (user) {
             res.status(200).json({ result: true, user: user, message: "Search Success" });
         } else {
@@ -156,7 +155,7 @@ router.post('/upload-avatar', [upLoadImage.single('image')], async (req, res, ne
 router.post('/change-password', [], async (req, res, next) => {
 
     const { email, oldPassword, newPassword } = req.body;
-    console.log(email, oldPassword, newPassword)
+    // console.log(email, oldPassword, newPassword)
     try {
         const user = await userController.changePassword(email, oldPassword, newPassword);
         console.log(user)

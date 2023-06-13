@@ -38,11 +38,11 @@ const loginGoogle = async (email, avatar, name) => {
 const register = async (email, password, name, description, gender, dob, avatar, role, createAt, updateAt, isLogin) => {
     try {
 
-        console.log("QQQQ", email, password, name, description, gender, dob, avatar, role, createAt, updateAt, isLogin)
+        // console.log("QQQQ", email, password, name, description, gender, dob, avatar, role, createAt, updateAt, isLogin)
 
 
         const user = await UserModel.findOne({ email: email })
-        console.log("userrrr", user)
+        // console.log("userrrr", user)
         if (user == null) {
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(password, salt);
@@ -63,7 +63,7 @@ const register = async (email, password, name, description, gender, dob, avatar,
 const deleteUser = async (email) => {
     try {
         const user = await UserModel.findOne({ email: email })
-        console.log(user)
+        // console.log(user)
         {
             await UserModel.deleteOne(user)
         }
@@ -107,7 +107,7 @@ const updateUser = async (email, password, name, description, gender, dob, avata
 }
 const search = async (email) => {
     try {
-        console.log("phoneNumber", email)
+        // console.log("phoneNumber", email)
         return await UserModel.findOne(
             { email: email }
         )
@@ -130,7 +130,7 @@ const changePassword = async (email, oldPassword, newPassword) => {
     try {
         const user = await UserModel.findOne({ email: email })
         if (user) {
-            console.log("INFO USER:", user);
+            // console.log("INFO USER:", user);
             const isPasswordValid = await bcrypt.compare(oldPassword, user.password)
             if (isPasswordValid) {
                 user.password = newPassword
