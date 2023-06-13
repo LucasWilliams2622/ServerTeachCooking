@@ -13,6 +13,16 @@ router.get('/get-all', [], async (req, res, next) => {
     }
 });
 
+// http://localhost:3001/recipe/api/get-all
+router.get('/changeLimit', [], async (req, res, next) => {
+    try {
+        const recipe = await recipeController.changeLimitPage();
+        return res.status(200).json({ result: true, recipe: recipe, error: false });
+    } catch (error) {
+        return res.status(500).json({ result: false, recipe: null });
+    }
+});
+
 // http://localhost:3001/recipe/api/get-by-id/
 router.get('/get-by-id', async (req, res, next) => {
     try {
