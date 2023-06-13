@@ -12,8 +12,7 @@ router.get('/get-all', [], async (req, res, next) => {
         return res.status(500).json({ result: false, recipe: null });
     }
 });
-
-// http://localhost:3001/recipe/api/get-all
+// http://localhost:3001/recipe/api/changeLimit
 router.get('/changeLimit', [], async (req, res, next) => {
     try {
         const recipe = await recipeController.changeLimitPage();
@@ -69,9 +68,9 @@ router.get('/search-by-author', [], async (req, res, next) => {
 // http://localhost:3001/recipe/api/delete-by-id
 router.delete('/delete-by-id', async (req, res, next) => {
     try {
-        const { _id,idUser } = req.query;
-        console.log("_id,idUser",_id,idUser);
-        const recipe = await recipeController.deleteById(_id,idUser);
+        const { _id, idUser } = req.query;
+        console.log("_id,idUser", _id, idUser);
+        const recipe = await recipeController.deleteById(_id, idUser);
         if (recipe) {
             return res.status(200).json({ result: true, message: "Delete Success" });
         }
