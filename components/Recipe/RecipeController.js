@@ -8,6 +8,13 @@ const getAllRecipe = async () => {
     }
 }
 
+const changeLimitPage = async () => {
+    try {
+        return await recipeService.changeLimitPage();
+    } catch (error) {
+        return false;
+    }
+}
 const deleteById = async (_id,idUser) => {
     try {
         return await recipeService.deleteById(_id,idUser);
@@ -63,5 +70,5 @@ const searchByAuthor = async (author) => {
 module.exports = {
     getAllRecipe, deleteById, addNewRecipe,
     getById, updateById, searchByTitle,
-    searchByAuthor,
+    searchByAuthor,changeLimitPage
 };

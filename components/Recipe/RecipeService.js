@@ -1,9 +1,22 @@
 const recipeModel = require('./RecipeModel');
-
+let limit = 10;
 const getAllRecipe = async (page, size) => {
     try {
         return recipeModel.find({}, 'title description time mealType image ingredients steps idComment author idVideo ')
-            .populate('author', 'name avatar email')
+            .populate('author', 'name avatar email').limit(10);
+        // .populate('steps', 'content numStep')
+        // .populate('ingredients', 'unit quantity name')
+        // .populate('idComment', 'unit content name')
+        // .populate('Category', 'name')
+    } catch (error) {
+        console.log('Get all recipe error:', error);
+        throw error;
+    }
+}
+const changeLimitPage = async (page, size) => {
+    try {
+        return recipeModel.find({}, 'title description time mealType image ingredients steps idComment author idVideo ')
+            .populate('author', 'name avatar email').limit(limit+=10);
         // .populate('steps', 'content numStep')
         // .populate('ingredients', 'unit quantity name')
         // .populate('idComment', 'unit content name')
@@ -137,6 +150,6 @@ const searchByAuthor = async (author) => {
 module.exports = {
     getAllRecipe, deleteById, addNewRecipe,
     getById, updateById, searchByTitle,
-    searchByAuthor
+    searchByAuthor,changeLimitPage
 };
 
