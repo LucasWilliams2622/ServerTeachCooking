@@ -13,7 +13,6 @@ const recipeSchema = new mongoose.Schema({
   category: { type: [String], ref: 'Category' },
   idComment: { type: [String], ref: 'Comment', },
   author: { type: ObjectId, required: true, ref: 'User', },
-
   idVideo: { type: String, },
   difficulty: { type: String, },
   mealType: { type: String, },

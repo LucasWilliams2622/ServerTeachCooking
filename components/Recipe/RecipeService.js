@@ -1,9 +1,22 @@
 const recipeModel = require('./RecipeModel');
-
+let limit = 10;
 const getAllRecipe = async (page, size) => {
     try {
         return recipeModel.find({}, 'title description time mealType image ingredients steps idComment author idVideo ')
-            .populate('author', 'name avatar email')
+            .populate('author', 'name avatar email').limit(10);
+        // .populate('steps', 'content numStep')
+        // .populate('ingredients', 'unit quantity name')
+        // .populate('idComment', 'unit content name')
+        // .populate('Category', 'name')
+    } catch (error) {
+        console.log('Get all recipe error:', error);
+        throw error;
+    }
+}
+const changeLimitPage = async (page, size) => {
+    try {
+        return recipeModel.find({}, 'title description time mealType image ingredients steps idComment author idVideo ')
+            .populate('author', 'name avatar email').limit(limit+=10);
         // .populate('steps', 'content numStep')
         // .populate('ingredients', 'unit quantity name')
         // .populate('idComment', 'unit content name')
@@ -33,10 +46,10 @@ const getAllRecipe_vs2 = async (page, size) => {
 const deleteById = async (_id, idUser) => {
     try {
         const user = await recipeModel.findOne({ author: idUser })
-        console.log(user);
+        // console.log(user);
         if (user) {
             const recipe = await recipeModel.findOneAndDelete({ _id: _id, author: idUser });
-            console.log("============>",recipe)
+            // console.log("============>",recipe)
             if (recipe != null) {
                 return true;
             }
@@ -112,7 +125,7 @@ const searchByTitle = async (title) => {
     try {
 
         const recipe = await recipeModel.find({ title: { $regex: title, $options: 'i' }, }).populate('author', 'name avatar')
-        console.log("=========", recipe);
+        // console.log("=========", recipe);
         if (recipe.length === 0) {
             return false
         }
@@ -126,7 +139,7 @@ const searchByTitle = async (title) => {
 const searchByAuthor = async (author) => {
     try {
         const recipe = await recipeModel.find({ author })
-        console.log(recipe);
+        // console.log(recipe);
         return recipe
     } catch (error) {
         console.log('search recipe by name error ', error);
@@ -137,6 +150,6 @@ const searchByAuthor = async (author) => {
 module.exports = {
     getAllRecipe, deleteById, addNewRecipe,
     getById, updateById, searchByTitle,
-    searchByAuthor
+    searchByAuthor,changeLimitPage
 };
 
